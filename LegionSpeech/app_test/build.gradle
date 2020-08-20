@@ -23,8 +23,8 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':dialog_manager')
-    implementation project(path: ':speech_service')
-    implementation project(path: ':speech_protocol')
+    implementation project(path: ':app_module:dialog_manager')
+    implementation project(path: ':app_module:speech_service')
+    implementation project(path: ':app_module:speech_protocol')
 
 }

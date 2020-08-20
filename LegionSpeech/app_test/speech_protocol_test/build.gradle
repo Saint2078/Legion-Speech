@@ -24,6 +24,6 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':speech_protocol')
+    implementation project(path: ':app_module:speech_protocol')
 
 }
