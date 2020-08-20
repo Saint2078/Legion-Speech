@@ -6,18 +6,22 @@ import com.orhanobut.logger.*
 
 object LoggerUtil {
 
-    fun init(tag: String, enablePrint: Boolean, enableStorage: Boolean) {
+    fun init(tag: String,
+             enablePrint: Boolean = true,
+             enableStorage: Boolean = true
+    ) {
         val prettyFormatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(false)
             .methodCount(0)
             .methodOffset(0)
             .tag(tag)
             .build()
-
         setuoLogger(prettyFormatStrategy, enablePrint, enableStorage)
     }
 
-    fun init(enablePrint: Boolean, enableStorage: Boolean) {
+    fun init(enablePrint: Boolean = true,
+             enableStorage: Boolean = true
+    ) {
         val prettyFormatStrategy: FormatStrategy = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(false)
             .methodCount(0)

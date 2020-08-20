@@ -8,7 +8,7 @@ class BaseApplication : Application() {
         super.onCreate()
         AppContextLinker.setupLink(this)
         Thread.setDefaultUncaughtExceptionHandler(CrashCatcher())
-        LoggerUtil.init("DarkFog",true,true)
+        LoggerUtil.init("DarkFog")
     }
 
 }
