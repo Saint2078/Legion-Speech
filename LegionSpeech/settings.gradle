@@ -1,3 +1,6 @@
+include ':app_test:speech_protocol_test'
+include ':app_test:dialog_manager_test'
+include ':app_test:speech_service_test'
 include ':app_test'
 include ':speech_protocol'
 include ':dialog_manager'
