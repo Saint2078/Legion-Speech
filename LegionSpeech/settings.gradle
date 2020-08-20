@@ -1,3 +1,6 @@
+include ':speech_protocol'
+include ':dialog_manager'
+include ':speech_service'
 include ':foundation'
 include ':app'
 rootProject.name = "LegionSpeech"
