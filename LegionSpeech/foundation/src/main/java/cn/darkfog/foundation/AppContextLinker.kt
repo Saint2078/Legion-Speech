@@ -11,18 +11,8 @@ object AppContextLinker{
     lateinit var context: Context
         private set
 
-
     fun setupLink(application: Application){
         context = application
-
-        Logger.addLogAdapter(
-            DiskLogAdapter(
-                CsvFormatStrategy.newBuilder()
-            .tag("DarkFog")
-            .build())
-        )
-        Logger.addLogAdapter(AndroidLogAdapter())
-        Thread.setDefaultUncaughtExceptionHandler(CrashCather());
     }
 
 }

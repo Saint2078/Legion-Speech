@@ -7,6 +7,8 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         AppContextLinker.setupLink(this)
+        Thread.setDefaultUncaughtExceptionHandler(CrashCatcher())
+        LoggerUtil.init("DarkFog",true,true)
     }
 
 }
