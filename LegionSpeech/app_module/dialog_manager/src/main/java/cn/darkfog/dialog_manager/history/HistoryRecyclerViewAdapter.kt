@@ -1,4 +1,4 @@
-package cn.darkfog.dialog_manager.dummy
+package cn.darkfog.dialog_manager.history
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,19 +6,19 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
-import cn.darkfog.dialog_manager.dummy.dummy.DummyContent.DummyItem
+import cn.darkfog.dialog_manager.history.dummy.DummyContent.DummyItem
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class HistoryRecyclerViewAdapter(
-    private val values: List<DummyItem>
+    private val values: List<HistoryData>
 ) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_history, parent, false)
+            .inflate(R.layout.fragment_history_item, parent, false)
         return ViewHolder(view)
     }
 

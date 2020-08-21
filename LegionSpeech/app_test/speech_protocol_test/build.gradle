@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "cn.darkfog.speech_protocol2"
+        applicationId "cn.darkfog.speech_protocol_test"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
