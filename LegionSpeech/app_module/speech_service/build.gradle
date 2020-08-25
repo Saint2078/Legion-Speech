@@ -21,10 +21,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions{
+        doNotStrip "*/*/libvad.dnn.so"
+        doNotStrip "*/*/libbd_easr_s1_merge_normal_20151216.dat.so"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(path: ':app_module:foundation')
-    implementation project(path: ':app_module:dialog_manager')
+//    implementation project(path: ':app_module:dialog_manager')
 }

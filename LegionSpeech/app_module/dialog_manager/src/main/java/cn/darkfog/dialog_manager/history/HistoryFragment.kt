@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
-import cn.darkfog.dialog_manager.history.dummy.DummyContent
 
 /**
  * A fragment representing a list of Items.

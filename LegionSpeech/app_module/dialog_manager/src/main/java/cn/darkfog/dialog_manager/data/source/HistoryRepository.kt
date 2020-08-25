@@ -6,17 +6,17 @@ import cn.darkfog.dialog_manager.history.HistoryData
  * Rxkotlin
  * 做整个历史记录的更新和删除吧
  */
-object HistoryRepository
+object HistoryRepository {
 
-fun loadHistories() {
+    fun loadHistories() {
 
-}
+    }
 
-fun addHistory(history: HistoryData) {
+    fun addHistory(history: HistoryData) {
 
-}
+    }
 
-fun updateHistory() {
+    fun updateHistory() {
 
 }
 

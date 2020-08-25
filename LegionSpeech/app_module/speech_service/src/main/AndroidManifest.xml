@@ -18,4 +18,5 @@
         android:name="com.baidu.speech.SECRET_KEY"
         android:value="dCNc7DQTY9n3lugsWiuFM6Ggm7EtRg1U" />
 
+
 </manifest>
