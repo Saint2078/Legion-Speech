@@ -1,3 +1,21 @@
-<manifest package="cn.darkfog.speech_service">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.darkfog.speech_service">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <meta-data
+        android:name="com.baidu.speech.APP_ID"
+        android:value="22208854" />
+
+    <meta-data
+        android:name="com.baidu.speech.API_KEY"
+        android:value="KrEZBNmeG7QoGejBDh70WnX" />
+
+    <meta-data
+        android:name="com.baidu.speech.SECRET_KEY"
+        android:value="dCNc7DQTY9n3lugsWiuFM6Ggm7EtRg1U" />
 
 </manifest>

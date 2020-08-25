@@ -26,5 +26,4 @@ dependencies {
     implementation project(path: ':app_module:dialog_manager')
     implementation project(path: ':app_module:speech_service')
     implementation project(path: ':app_module:speech_protocol')
-
 }
