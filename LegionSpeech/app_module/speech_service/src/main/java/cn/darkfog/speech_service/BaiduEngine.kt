@@ -15,7 +15,7 @@ object BaiduEngine : CLog {
             SpeechConstant.SOUND_START to R.raw.bdspeech_recognition_start,
             SpeechConstant.SOUND_END to R.raw.bdspeech_recognition_error,
             SpeechConstant.SOUND_CANCEL to R.raw.bdspeech_recognition_cancel,
-            SpeechConstant.PID to "15373",
+            SpeechConstant.PID to "15363",
             SpeechConstant.VAD to SpeechConstant.VAD_DNN,
             SpeechConstant.VAD_ENDPOINT_TIMEOUT to 800,
             SpeechConstant.DECODER to 0,
@@ -53,17 +53,18 @@ object BaiduEngine : CLog {
     }
 
     fun start(test: Int = 0) {
-        val outfile =
-            "${AppContextLinker.context.getExternalFilesDirs("audio")[0].absolutePath}${File.separator}${System.currentTimeMillis()}.pcm"
-        if (!File(outfile).exists())
-            logD {
-                "create $outfile result : ${File(outfile).createNewFile()}"
-            }
-        manager.send(
-            SpeechConstant.ASR_START, params.plus(
-                "outfile" to outfile
-            ), null, 0, 0
-        )
+        manager.send(SpeechConstant.ASR_START, params, null, 0, 0)
+//        val outfile =
+//            "${AppContextLinker.context.getExternalFilesDirs("audio")[0].absolutePath}${File.separator}${System.currentTimeMillis()}.pcm"
+//        if (!File(outfile).exists())
+//            logD {
+//                "create $outfile result : ${File(outfile).createNewFile()}"
+//            }
+//        manager.send(
+//            SpeechConstant.ASR_START, params.plus(
+//                "outfile" to outfile
+//            ), null, 0, 0
+//        )
     }
 
     fun cancel() {
