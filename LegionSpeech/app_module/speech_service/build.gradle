@@ -30,5 +30,5 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api project(path: ':app_module:foundation')
-//    implementation project(path: ':app_module:dialog_manager')
+    api project(path: ':app_module:speech_protocol')
 }

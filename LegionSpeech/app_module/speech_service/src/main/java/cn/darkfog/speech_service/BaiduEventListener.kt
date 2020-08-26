@@ -1,13 +1,11 @@
 package cn.darkfog.speech_service
 
 import cn.darkfog.foundation.CLog
-import cn.darkfog.foundation.logD
+import cn.darkfog.speech_protocol.SpeechCallback
 import com.baidu.speech.EventListener
-import io.reactivex.ObservableEmitter
 
 
-object BaiduEventListener : EventListener, CLog {
-    private var emitter: ObservableEmitter<BaiduEvent>? = null
+class BaiduEventListener(val callback: SpeechCallback) : EventListener, CLog {
 
     override fun onEvent(
         name: String?,
@@ -16,15 +14,9 @@ object BaiduEventListener : EventListener, CLog {
         offset: Int,
         length: Int
     ) {
-        val event = BaiduEvent(name, params, data, offset, length)
-        logD {
-            event.toString()
-        }
-        emitter?.onNext(event)
-    }
+        val event = BaiduEvent(name, params, data?.let { String(it) }, offset, length)
 
-    fun setEmitter(e: ObservableEmitter<BaiduEvent>?) {
-        emitter = e
+
     }
 
 }

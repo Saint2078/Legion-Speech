@@ -1,4 +1,4 @@
-package cn.darkfog.dialog_manager.manager
+package cn.darkfog.speech_protocol.function
 
 import android.content.Intent
 import android.content.pm.PackageInfo
