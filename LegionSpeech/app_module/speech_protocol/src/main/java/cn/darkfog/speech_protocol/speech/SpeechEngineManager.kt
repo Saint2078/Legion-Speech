@@ -1,4 +1,6 @@
-package cn.darkfog.speech_protocol
+package cn.darkfog.speech_protocol.speech
+
+import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 
 object SpeechEngineManager {
 

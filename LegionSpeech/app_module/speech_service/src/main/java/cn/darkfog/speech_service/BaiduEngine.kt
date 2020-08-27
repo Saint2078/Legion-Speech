@@ -2,9 +2,9 @@ package cn.darkfog.speech_service
 
 import cn.darkfog.foundation.AppContextLinker
 import cn.darkfog.foundation.CLog
-import cn.darkfog.speech_protocol.SpeechCallback
-import cn.darkfog.speech_protocol.SpeechEngine
-import cn.darkfog.speech_protocol.SpeechEngineManager
+import cn.darkfog.speech_protocol.speech.SpeechEngine
+import cn.darkfog.speech_protocol.speech.SpeechEngineManager
+import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
 import org.json.JSONObject
@@ -15,8 +15,7 @@ object BaiduEngine : SpeechEngine(), CLog {
             SpeechConstant.SOUND_START to R.raw.bdspeech_recognition_start,
             SpeechConstant.SOUND_END to R.raw.bdspeech_recognition_error,
             SpeechConstant.SOUND_CANCEL to R.raw.bdspeech_recognition_cancel,
-            SpeechConstant.APP_NAME to "cn.darkfog.speech_service_test",
-            SpeechConstant.PID to "15363",
+            SpeechConstant.PID to "1537",
             SpeechConstant.VAD to SpeechConstant.VAD_DNN,
             SpeechConstant.VAD_ENDPOINT_TIMEOUT to 800,
             SpeechConstant.NLU to "enable",
@@ -32,7 +31,7 @@ object BaiduEngine : SpeechEngine(), CLog {
         )
     ).toString()
 
-    val manager = EventManagerFactory.create(AppContextLinker.context, "asr").apply {
+    private val manager = EventManagerFactory.create(AppContextLinker.context, "asr").apply {
         send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
 

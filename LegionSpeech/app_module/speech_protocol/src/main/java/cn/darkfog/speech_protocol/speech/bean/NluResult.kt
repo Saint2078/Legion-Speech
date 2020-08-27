@@ -1,4 +1,4 @@
-package cn.darkfog.speech_protocol
+package cn.darkfog.speech_protocol.speech.bean
 
 data class NluResult(
     val domain: String,

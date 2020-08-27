@@ -1,7 +1,7 @@
 package cn.darkfog.speech_service
 
 import cn.darkfog.foundation.CLog
-import cn.darkfog.speech_protocol.SpeechCallback
+import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import com.baidu.speech.EventListener
 
 

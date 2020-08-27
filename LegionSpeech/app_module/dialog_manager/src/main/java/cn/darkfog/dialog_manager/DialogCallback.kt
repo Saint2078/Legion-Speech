@@ -1,7 +1,7 @@
 package cn.darkfog.dialog_manager
 
-import cn.darkfog.speech_protocol.AsrResult
-import cn.darkfog.speech_protocol.NluResult
+import cn.darkfog.speech_protocol.speech.bean.AsrResult
+import cn.darkfog.speech_protocol.speech.bean.NluResult
 
 abstract class DialogCallback {
 

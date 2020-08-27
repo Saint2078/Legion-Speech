@@ -2,10 +2,10 @@ package cn.darkfog.dialog_manager
 
 import androidx.lifecycle.MutableLiveData
 import cn.darkfog.foundation.StorageUtil
-import cn.darkfog.speech_protocol.AsrResult
-import cn.darkfog.speech_protocol.NluResult
-import cn.darkfog.speech_protocol.SpeechCallback
-import cn.darkfog.speech_protocol.SpeechEngineManager
+import cn.darkfog.speech_protocol.speech.SpeechEngineManager
+import cn.darkfog.speech_protocol.speech.bean.AsrResult
+import cn.darkfog.speech_protocol.speech.bean.NluResult
+import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import io.reactivex.Single
 import java.io.File
 

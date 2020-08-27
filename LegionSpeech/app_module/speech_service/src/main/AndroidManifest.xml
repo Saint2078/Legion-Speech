@@ -11,34 +11,32 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-    <!--    <application>-->
-    <!--        <meta-data-->
-    <!--            android:name="com.baidu.speech.APP_ID"-->
-    <!--            android:value="22256295" />-->
-
-    <!--        <meta-data-->
-    <!--            android:name="com.baidu.speech.API_KEY"-->
-    <!--            android:value="LWmEfVhRB1VUhAZnNo8qgqUi" />-->
-
-    <!--        <meta-data-->
-    <!--            android:name="com.baidu.speech.SECRET_KEY"-->
-    <!--            android:value="HgGcQRLfyr4UY2zThoPuOljEGBqq9tbz" />-->
-
-    <!--        <service android:name="com.baidu.speech.VoiceRecognitionService" android:exported="false" />-->
-    <!--    </application>-->
-
     <application>
-
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="16749257" />
+            android:value="22256295" />
+
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="hlRN25tWVeYn3fAhMXyT9Mod" />
+            android:value="LWmEfVhRB1VUhAZnNo8qgqUi" />
+
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="sBQifKVDAvxIiUjz8iTKNvb94GnUNBxh" />
-
+            android:value="HgGcQRLfyr4UY2zThoPuOljEGBqq9tbz" />
     </application>
+
+    <!--    <application>-->
+
+    <!--        <meta-data-->
+    <!--            android:name="com.baidu.speech.APP_ID"-->
+    <!--            android:value="16749257" />-->
+    <!--        <meta-data-->
+    <!--            android:name="com.baidu.speech.API_KEY"-->
+    <!--            android:value="hlRN25tWVeYn3fAhMXyT9Mod" />-->
+    <!--        <meta-data-->
+    <!--            android:name="com.baidu.speech.SECRET_KEY"-->
+    <!--            android:value="sBQifKVDAvxIiUjz8iTKNvb94GnUNBxh" />-->
+
+    <!--    </application>-->
 
 </manifest>

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity(), CLog {
         setContentView(R.layout.activity_main)
         requestPermissionIfNeeded()
         findViewById<TextView>(R.id.test).setOnClickListener {
-            BaiduEngine.start(0)
+            BaiduEngine.start()
         }
     }
 

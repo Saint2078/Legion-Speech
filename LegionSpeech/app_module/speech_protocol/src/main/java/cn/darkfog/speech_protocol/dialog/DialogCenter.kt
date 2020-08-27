@@ -1,4 +1,6 @@
-package cn.darkfog.speech_protocol
+package cn.darkfog.speech_protocol.dialog
+
+import cn.darkfog.speech_protocol.speech.bean.NluResult
 
 //可以用kapt优化
 object DialogCenter {
