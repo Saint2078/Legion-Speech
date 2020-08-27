@@ -9,4 +9,5 @@ abstract class DialogIntent {
 
     //不需要检查的情况
     open fun checkSlots(result: NluResult): Boolean = true
-//}
+
+}

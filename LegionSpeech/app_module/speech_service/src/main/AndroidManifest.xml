@@ -14,15 +14,19 @@
     <application>
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="22256295" />
+            android:value="16749257" />
 
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="LWmEfVhRB1VUhAZnNo8qgqUi" />
+            android:value="hlRN25tWVeYn3fAhMXyT9Mod" />
 
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="HgGcQRLfyr4UY2zThoPuOljEGBqq9tbz" />
+            android:value="sBQifKVDAvxIiUjz8iTKNvb94GnUNBxh" />
+
+        <service
+            android:name="com.baidu.speech.VoiceRecognitionService"
+            android:exported="false" />
     </application>
 
     <!--    <application>-->

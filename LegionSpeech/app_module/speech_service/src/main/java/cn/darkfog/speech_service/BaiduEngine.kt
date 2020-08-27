@@ -15,7 +15,7 @@ object BaiduEngine : SpeechEngine(), CLog {
             SpeechConstant.SOUND_START to R.raw.bdspeech_recognition_start,
             SpeechConstant.SOUND_END to R.raw.bdspeech_recognition_error,
             SpeechConstant.SOUND_CANCEL to R.raw.bdspeech_recognition_cancel,
-            SpeechConstant.PID to "1537",
+            SpeechConstant.PID to "15363",
             SpeechConstant.VAD to SpeechConstant.VAD_DNN,
             SpeechConstant.VAD_ENDPOINT_TIMEOUT to 800,
             SpeechConstant.NLU to "enable",

@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "cn.darkfog.speech_service_test"
+        applicationId "com.tenke.app"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
@@ -19,11 +19,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-
-    packagingOptions{
-        doNotStrip "*/*/libvad.dnn.so"
-        doNotStrip "*/*/libbd_easr_s1_merge_normal_20151216.dat.so"
     }
 }
 
