@@ -11,7 +11,7 @@ data class BaiduNluResponse(
     val results: List<BaiduNluResult>
 ) {
     fun toNluResult(): NluResult {
-
+        return NluResult("", "", listOf(), 0)
     }
 }
 

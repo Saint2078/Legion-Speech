@@ -1,20 +1,15 @@
-package cn.darkfog.legionspeech
+package cn.darkfog.foundation
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.legionspeech.view.SpeechView
 
-class MainActivity : AppCompatActivity() {
+abstract class PermissionActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        requestPermissionIfNeeded()
-        SpeechView.show()
-        if (!BuildConfig.DEBUG) {
-            finish()
-        }
+        //requestPermissionIfNeeded()
     }
 
     private fun requestPermissionIfNeeded() {
@@ -32,6 +27,10 @@ class MainActivity : AppCompatActivity() {
         var granted = true
         for (i in permissions.indices) {
             if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                val msg = """
+                    No permission for ${permissions[i]}
+                    """.trimIndent()
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
                 granted = false
             }
         }
@@ -43,13 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun requestPermissionsSuc() {
+    abstract fun requestPermissionsSuc()
 
-
-    }
-
-    fun requestPermissionsFail() {
-
-    }
-
+    abstract fun requestPermissionsFail()
 }
