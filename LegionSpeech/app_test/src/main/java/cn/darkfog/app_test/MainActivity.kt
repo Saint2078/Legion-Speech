@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import cn.darkfog.foundation.CLog
 import cn.darkfog.foundation.logD
-import cn.darkfog.speech_service.BaiduEvent
 import cn.darkfog.speech_service.BaiduSpeechManager
+import cn.darkfog.speech_service.model.bean.BaiduResponse
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(), CLog {
         setContentView(R.layout.activity_main)
 
         BaiduSpeechManager.start().subscribe(
-            object : Observer<BaiduEvent> {
+            object : Observer<BaiduResponse> {
                 override fun onComplete() {
                     logD { "onComplete: " }
                 }
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(), CLog {
                     logD { "onSubscribe: " }
                 }
 
-                override fun onNext(t: BaiduEvent) {
+                override fun onNext(t: BaiduResponse) {
                     logD { "onNext: $t" }
                 }
 

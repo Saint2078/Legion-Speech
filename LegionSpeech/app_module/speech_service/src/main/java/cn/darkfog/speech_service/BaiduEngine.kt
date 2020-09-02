@@ -32,7 +32,7 @@ object BaiduEngine : SpeechEngine(), CLog {
     ).toString()
 
     private val manager = EventManagerFactory.create(AppContextLinker.context, "asr").apply {
-        send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
+        //send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
 
     init {

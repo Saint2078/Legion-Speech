@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.tenke.app"
+        applicationId "cn.darkfog.speech_test"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1

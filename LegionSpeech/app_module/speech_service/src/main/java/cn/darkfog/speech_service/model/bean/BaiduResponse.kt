@@ -1,6 +1,6 @@
-package cn.darkfog.speech_service
+package cn.darkfog.speech_service.model.bean
 
-data class BaiduEvent(
+data class BaiduResponse(
     val name: String?,
     val params: String?,
     val data: String?,
