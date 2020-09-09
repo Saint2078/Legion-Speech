@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
+import cn.darkfog.dialog_manager.model.bean.SpeechRecord
+import cn.darkfog.speech_protocol.speech.bean.ASR
+import cn.darkfog.speech_protocol.speech.bean.NLU
 
 /**
  * A fragment representing a list of Items.
@@ -38,10 +41,26 @@ class HistoryFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = HistoryRecyclerViewAdapter(DummyContent.ITEMS)
+                adapter = HistoryRecyclerViewAdapter(
+                    listOf(
+                        SpeechRecord(
+                            System.currentTimeMillis(), "test.pcm",
+                            ASR("我要听周杰伦的歌"),
+                            NLU("", "放歌", Bundle())
+                        ), SpeechRecord(
+                            System.currentTimeMillis(), "test.pcm",
+                            ASR("我要听周杰伦的歌131313133"),
+                            NLU("", "放歌", Bundle())
+                        )
+                    ), ::playOrDetail
+                )
             }
         }
         return view
+    }
+
+    fun playOrDetail(type: String, record: SpeechRecord) {
+
     }
 
     companion object {

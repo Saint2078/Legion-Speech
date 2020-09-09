@@ -88,4 +88,6 @@ dependencies {
     api 'com.blankj:utilcodex:1.29.0'
 
     api 'androidx.constraintlayout:constraintlayout:2.0.1'
+
+    api 'androidx.recyclerview:recyclerview:1.1.0'
 }
