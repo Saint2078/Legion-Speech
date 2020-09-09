@@ -1,0 +1,22 @@
+<mxfile host="app.diagrams.net" modified="2020-09-09T03:13:15.556Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36" etag="vRUNriWiBuwxwYus4Y2h" version="13.6.6" type="github">
+  <diagram id="rtTrN1SZqZnXTIQcN0de" name="Page-1">
+    <mxGraphModel dx="1426" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" background="#1C3E60" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="C1pf8PMfn3ykEMTa6c4z-14" value="SpeechService&#xa;提供语音能力，输出SpeechState,&#xa;AsrResult&#xa;NluResult&#xa;SpeechError&#xa;voiceEnergy&#xa;prtical result&#xa;" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;rounded=1;shadow=0;glass=0;sketch=0;strokeColor=#000000;fillColor=#5DC4E3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="160" y="80" width="320" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="C1pf8PMfn3ykEMTa6c4z-16" value="DialogMannger&#xa;接受SpeechService的各种结果做异化算法处理&#xa;提供最终的UIResponse&#xa;Nlu最终的的command&#xa;" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;rounded=1;shadow=0;glass=0;sketch=0;strokeColor=#000000;fillColor=#5DC4E3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="520" y="80" width="320" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="C1pf8PMfn3ykEMTa6c4z-19" value="Common&#xa;基础架构包&#xa;基础引用资源包&#xa;基础资源包&#xa;基本类和工具包" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;rounded=1;shadow=0;glass=0;sketch=0;strokeColor=#000000;fillColor=#5DC4E3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="160" y="400" width="320" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="C1pf8PMfn3ykEMTa6c4z-20" value="异化算法模块" style="shape=module;align=left;spacingLeft=20;align=center;verticalAlign=top;rounded=1;shadow=0;glass=0;sketch=0;strokeColor=#000000;fillColor=#5DC4E3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="320" height="280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
