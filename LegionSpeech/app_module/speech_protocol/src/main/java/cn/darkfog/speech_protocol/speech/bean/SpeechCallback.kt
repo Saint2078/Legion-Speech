@@ -1,12 +1,12 @@
 package cn.darkfog.speech_protocol.speech.bean
 
-abstract class SpeechCallback {
+interface SpeechCallback {
 
     abstract fun onPartialAsrResult(result: ASR)
 
-    abstract fun onFinalAsrResult(results: ASR)
+    abstract fun onFinalAsrResult(result: ASR)
 
-    abstract fun onFinalNluResult(results: NLU)
+    abstract fun onFinalNluResult(result: NLU)
 
     abstract fun onError(e: Exception)
 

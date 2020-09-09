@@ -1,62 +1,62 @@
 package cn.darkfog.dialog_manager
 
-import androidx.lifecycle.MutableLiveData
+import cn.darkfog.dialog_manager.model.bean.SpeechRecord
 import cn.darkfog.foundation.util.StorageUtil
-import cn.darkfog.speech_protocol.speech.SpeechEngineManager
-import cn.darkfog.speech_protocol.speech.bean.AsrResult
-import cn.darkfog.speech_protocol.speech.bean.NluResult
+import cn.darkfog.speech_protocol.speech.bean.ASR
+import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
-import io.reactivex.Single
-import java.io.File
-
-//先做说一句话吧
-//多句话也做吧  长语音的音频会被切分吗？需要研究一下
+import cn.darkfog.speech_protocol.speech.bean.SpeechState
+import cn.darkfog.speech_service.BaiduEngine
 
 object DialogManager {
-    //need solution
-    val partial = MutableLiveData<AsrResult>()
 
-    fun startOneShot(): Single<DialogResult> {
-        val outfile = "${StorageUtil.AUDIO_PATH}${File.separator}${System.currentTimeMillis()}.pcm"
-        val dialogResult = DialogResult(outfile)
-        return Single.create { singleEmitter ->
-            SpeechEngineManager.setSpeechCallback(object : SpeechCallback() {
-                override fun onPartialAsrResult(result: AsrResult) {
-                    partial.postValue(result)
-                }
+    private var record = SpeechRecord()
 
-                override fun onFinalAsrResult(results: List<AsrResult>) {
-                    dialogResult.asrResult = results.sortedByDescending {
-                        it.score
-                    }[0]
-                }
 
-                override fun onLocalNluResult(results: List<NluResult>) {
-                    TODO("Not yet implemented")
-//                    SpeechEngineManager.seechEngineImpl?.cancel()
-                }
+    init {
+        BaiduEngine.register(object : SpeechCallback {
+            override fun onPartialAsrResult(result: ASR) {
+                //particalText.
+            }
 
-                override fun onCloudNluResult(results: List<NluResult>) {
-                    TODO("Not yet implemented")
-//                    SpeechEngineManager.seechEngineImpl?.cancel()
-                }
+            override fun onFinalAsrResult(result: ASR) {
+                record.asr = result
+            }
 
-                override fun onError(e: Exception) {
-                    singleEmitter.onError(e)
-                }
+            override fun onFinalNluResult(result: NLU) {
+                record.nlu = result
+            }
 
-            })
-            SpeechEngineManager.seechEngineImpl?.start(outfile)
+            override fun onError(e: Exception) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        BaiduEngine.state.observeForever {
+            when (it) {
+                SpeechState.IDLE -> Unit
+                SpeechState.PROCESS -> Unit
+                SpeechState.ERROR -> Unit
+
+            }
         }
     }
 
-    fun startDialog() {
-        //长语音的音频会被切分吗？需要研究一下
+    fun start() {
+        record = SpeechRecord()
+        val time = System.currentTimeMillis()
+        record.timestamp = time
+        val file = "${StorageUtil.AUDIO_PATH}/$time.pcm"
+        record.pcmFile = file
+        BaiduEngine.start()
     }
 
+    fun stop() {
+        BaiduEngine.stop()
+    }
 
-    private fun startRecog() {
-//        SpeechEngineManager.seechEngineImpl?.start()
+    fun cancel() {
+        BaiduEngine.cancel()
     }
 
 

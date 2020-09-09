@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.util.GsonHelper
+import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
 import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
@@ -13,12 +14,13 @@ import cn.darkfog.speech_service.model.bean.BaiduPartialParams
 import cn.darkfog.speech_service.model.bean.BaiduResponse
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
+import io.reactivex.Completable
 import org.json.JSONObject
 
 object BaiduEngine : CLog {
-    private val state = MutableLiveData(SpeechState.ERROR)
+    val state = MutableLiveData(SpeechState.ERROR)
     private var callback: SpeechCallback? = null
-    private val recogParams = JSONObject(
+    private val recogParams =
         mapOf(
             SpeechConstant.SOUND_START to R.raw.bdspeech_recognition_start,
             SpeechConstant.SOUND_END to R.raw.bdspeech_recognition_error,
@@ -28,9 +30,8 @@ object BaiduEngine : CLog {
             SpeechConstant.VAD_ENDPOINT_TIMEOUT to 800,
             SpeechConstant.NLU to "enable",
             SpeechConstant.ACCEPT_AUDIO_VOLUME to false,
-            SpeechConstant.ACCEPT_AUDIO_DATA to false
+            SpeechConstant.ACCEPT_AUDIO_DATA to true
         )
-    ).toString()
 
     private val offlineParams = JSONObject(
         mapOf(
@@ -54,15 +55,18 @@ object BaiduEngine : CLog {
                 offset,
                 length
             )
-            processBaiduResponse(response)
+            processBaiduResponse(response).doOnError {
+                callback?.onError(Exception(it))
+            }.subscribe()
         }
     }
 
-    fun start(outfile: String) {
+    fun start(outfile: String = StorageUtil.AUDIO_PATH + "/" + System.currentTimeMillis() + ".pcm") {
+        val params = recogParams.plus(
+            SpeechConstant.OUT_FILE to outfile
+        )
         manager.send(
-            SpeechConstant.ASR_START, recogParams.plus(
-                "outfile" to outfile
-            ), null, 0, 0
+            SpeechConstant.ASR_START, JSONObject(params).toString(), null, 0, 0
         )
     }
 
@@ -78,37 +82,39 @@ object BaiduEngine : CLog {
         callback = speechCallback
     }
 
-    private fun processBaiduResponse(response: BaiduResponse) {
-        when (response.name) {
-            "asr.partial" -> {
-                val params =
-                    GsonHelper.gson.fromJson(response.params, BaiduPartialParams::class.java)
-                when (params.result_type) {
-                    "partial_result" -> callback?.onPartialAsrResult(ASR(params.best_result))
-                    "final_result" -> callback?.onFinalAsrResult(ASR(params.best_result))
-                    "nlu_result" -> {
-                        response.data?.let {
-                            val nlu = GsonHelper.gson.fromJson(
-                                response.data,
-                                BaiduNluResult::class.java
-                            ).results.sortedByDescending {
-                                it.score
-                            }[0]
-                            callback?.onFinalNluResult(
-                                NLU(
-                                    nlu.domain,
-                                    nlu.intent,
-                                    nlu.slots.toNluSlots()
+    private fun processBaiduResponse(response: BaiduResponse): Completable {
+        return Completable.create {
+            when (response.name) {
+                "asr.partial" -> {
+                    val params =
+                        GsonHelper.gson.fromJson(response.params, BaiduPartialParams::class.java)
+                    when (params.result_type) {
+                        "partial_result" -> callback?.onPartialAsrResult(ASR(params.best_result))
+                        "final_result" -> callback?.onFinalAsrResult(ASR(params.best_result))
+                        "nlu_result" -> {
+                            response.data?.let {
+                                val nlu = GsonHelper.gson.fromJson(
+                                    response.data,
+                                    BaiduNluResult::class.java
+                                ).results.sortedByDescending {
+                                    it.score
+                                }[0]
+                                callback?.onFinalNluResult(
+                                    NLU(
+                                        nlu.domain,
+                                        nlu.intent,
+                                        nlu.slots.toNluSlots()
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
-
                 }
+                "asr.begin" -> state.postValue(SpeechState.PROCESS)
+                "asr.finish" -> state.postValue(SpeechState.FINISH)
+                "asr.exit" -> state.postValue(SpeechState.IDLE)
+                else -> Unit
             }
-            "asr.begin" -> state.postValue(SpeechState.PROCESS)
-            "asr.exit" -> state.postValue(SpeechState.IDLE)
-            else -> Unit
         }
     }
 

@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
 import cn.darkfog.dialog_manager.history.dummy.DummyContent.DummyItem
+import cn.darkfog.dialog_manager.model.bean.SpeechRecord
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem].
  * TODO: Replace the implementation with code for your data type.
  */
 class HistoryRecyclerViewAdapter(
-    private val values: List<HistoryData>
+    private val values: List<SpeechRecord>
 ) : RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
