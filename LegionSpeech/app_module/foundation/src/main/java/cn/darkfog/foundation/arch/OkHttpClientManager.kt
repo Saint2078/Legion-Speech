@@ -1,4 +1,4 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.arch
 
 //import okhttp3.logging.HttpLoggingInterceptor
 

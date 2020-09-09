@@ -3,7 +3,7 @@ package cn.darkfog.legionspeech.view
 import android.view.View
 import android.widget.ImageView
 import androidx.lifecycle.MutableLiveData
-import cn.darkfog.foundation.AppContextLinker
+import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.legionspeech.R
 import com.blankj.utilcode.util.AdaptScreenUtils
 import com.blankj.utilcode.util.ScreenUtils

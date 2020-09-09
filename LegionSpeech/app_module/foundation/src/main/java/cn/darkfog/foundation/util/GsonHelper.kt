@@ -1,4 +1,4 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.util
 
 import com.google.gson.Gson
 

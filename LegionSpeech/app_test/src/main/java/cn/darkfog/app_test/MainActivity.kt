@@ -2,8 +2,8 @@ package cn.darkfog.app_test
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.foundation.CLog
-import cn.darkfog.foundation.logD
+import cn.darkfog.foundation.log.CLog
+import cn.darkfog.foundation.log.logD
 import cn.darkfog.speech_service.BaiduSpeechManager
 import cn.darkfog.speech_service.model.bean.BaiduResponse
 import io.reactivex.Observer

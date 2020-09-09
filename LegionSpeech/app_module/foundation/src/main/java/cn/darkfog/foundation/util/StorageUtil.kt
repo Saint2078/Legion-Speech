@@ -1,5 +1,6 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.util
 
+import cn.darkfog.foundation.arch.AppContextLinker
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.io.*

@@ -1,4 +1,4 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.log
 
 import com.orhanobut.logger.Logger
 

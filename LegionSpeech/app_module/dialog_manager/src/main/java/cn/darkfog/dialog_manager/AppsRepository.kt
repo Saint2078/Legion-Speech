@@ -1,7 +1,7 @@
 package cn.darkfog.dialog_manager
 
 import android.content.pm.PackageInfo
-import cn.darkfog.foundation.AppContextLinker
+import cn.darkfog.foundation.arch.AppContextLinker
 
 object AppsRepository {
 

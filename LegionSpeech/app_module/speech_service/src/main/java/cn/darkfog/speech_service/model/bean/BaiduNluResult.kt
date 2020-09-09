@@ -1,21 +1,17 @@
 package cn.darkfog.speech_service.model.bean
 
-import cn.darkfog.speech_protocol.speech.bean.NluResult
+import android.os.Bundle
 
-data class BaiduNluResponse(
+data class BaiduNluResult(
     val appid: Int,
     val encoding: String,
     val err_no: Int,
     val parsed_text: String,
     val raw_text: String,
-    val results: List<BaiduNluResult>
-) {
-    fun toNluResult(): NluResult {
-        return NluResult("", "", listOf(), 0)
-    }
-}
+    val results: List<NLUResult>
+)
 
-data class BaiduNluResult(
+data class NLUResult(
     val domain: String,
     val intent: String,
     val score: Double,
@@ -24,7 +20,13 @@ data class BaiduNluResult(
 
 data class Slots(
     val user_singer_name: List<UserSingerName>
-)
+) {
+    fun toNluSlots(): Bundle {
+        return Bundle().apply {
+            putString("singer_name", user_singer_name[0].word)
+        }
+    }
+}
 
 data class UserSingerName(
     val norm: String,

@@ -1,6 +1,6 @@
 package cn.darkfog.speech_protocol.speech
 
-import cn.darkfog.foundation.StorageUtil
+import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import java.io.File
 

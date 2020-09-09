@@ -1,6 +1,7 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.arch
 
 import android.app.Application
+import cn.darkfog.foundation.util.LoggerUtil
 
 open class BaseApplication : Application() {
 

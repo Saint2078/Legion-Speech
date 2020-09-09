@@ -3,7 +3,7 @@ package cn.darkfog.speech_protocol.function
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.net.Uri
-import cn.darkfog.foundation.AppContextLinker
+import cn.darkfog.foundation.arch.AppContextLinker
 
 
 // TODO: 2020/8/21  相关的借口全部需要转换成有反馈的

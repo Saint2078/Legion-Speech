@@ -1,4 +1,4 @@
-package cn.darkfog.foundation
+package cn.darkfog.foundation.util
 
 import androidx.annotation.Nullable
 import com.orhanobut.logger.*
@@ -16,7 +16,11 @@ object LoggerUtil {
             .methodOffset(0)
             .tag(tag)
             .build()
-        setuoLogger(prettyFormatStrategy, enablePrint, enableStorage)
+        setuoLogger(
+            prettyFormatStrategy,
+            enablePrint,
+            enableStorage
+        )
     }
 
     fun init(enablePrint: Boolean = true,
@@ -29,7 +33,11 @@ object LoggerUtil {
             .tag("")
             .build()
 
-        setuoLogger(prettyFormatStrategy, enablePrint, enableStorage)
+        setuoLogger(
+            prettyFormatStrategy,
+            enablePrint,
+            enableStorage
+        )
     }
 
     private fun setuoLogger(
