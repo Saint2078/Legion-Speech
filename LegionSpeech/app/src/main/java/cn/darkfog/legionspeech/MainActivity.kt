@@ -47,15 +47,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun requestPermissionsSuc() {
+    private fun requestPermissionsSuc() {
         startService(Intent(this, DialogService::class.java))
+        finish()
     }
 
-    fun requestPermissionsFail() {
+    private fun requestPermissionsFail() {
         Toast.makeText(this, "权限申请失败", Toast.LENGTH_LONG).show()
     }
 
-    fun requestWindow() {
+    private fun requestWindow() {
         startActivityForResult(
             Intent(
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
