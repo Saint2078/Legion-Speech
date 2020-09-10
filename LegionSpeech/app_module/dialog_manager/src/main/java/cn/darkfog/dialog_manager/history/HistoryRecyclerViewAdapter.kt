@@ -47,7 +47,7 @@ class HistoryRecyclerViewAdapter(
         val detail = view.findViewById<Button>(R.id.detail)
 
 
-        val asr = view.findViewById<TextView>(R.id.asrcontent)
+        val asr = view.findViewById<TextView>(R.id.asr)
         val action = view.findViewById<TextView>(R.id.actionContent)
     }
 

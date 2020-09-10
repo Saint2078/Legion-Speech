@@ -1,9 +1,12 @@
 package cn.darkfog.legionspeech
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.legionspeech.view.SpeechView
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,10 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestPermissionIfNeeded()
-        SpeechView.show()
-        if (!BuildConfig.DEBUG) {
-            finish()
-        }
     }
 
     private fun requestPermissionIfNeeded() {
@@ -29,27 +28,41 @@ class MainActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String>,
         grantResults: IntArray
     ) {
-        var granted = true
-        for (i in permissions.indices) {
-            if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                granted = false
+        when (requestCode) {
+            1 -> {
+                if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    requestPermissionsSuc()
+                } else {
+                    val index =
+                        grantResults.indices.filter { grantResults[it] != PackageManager.PERMISSION_GRANTED }
+                    if (index.size == 1 && permissions[index[0]] == "android.permission.SYSTEM_ALERT_WINDOW") {
+                        requestWindow()
+                        requestPermissionsSuc()
+                    } else {
+                        requestPermissionsFail()
+                    }
+                }
             }
         }
-        if (granted) {
-            requestPermissionsSuc()
-        } else {
-            requestPermissionsFail()
-            onDestroy()
-        }
+
     }
 
     fun requestPermissionsSuc() {
-
-
+        startService(Intent(this, DialogService::class.java))
     }
 
     fun requestPermissionsFail() {
-
+        Toast.makeText(this, "权限申请失败", Toast.LENGTH_LONG).show()
     }
+
+    fun requestWindow() {
+        startActivityForResult(
+            Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            ), 2
+        );
+    }
+
 
 }

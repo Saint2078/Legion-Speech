@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':app_module:speech_service')
+    api project(path: ':app_module:speech_service')
     implementation project(path: ':app_module:resource')
     api project(path: ':app_module:foundation')
 

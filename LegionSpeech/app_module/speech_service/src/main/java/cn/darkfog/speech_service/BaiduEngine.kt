@@ -45,8 +45,7 @@ object BaiduEngine : CLog {
         send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
 
-
-    init {
+    fun init() {
         manager.registerListener { name, params, data, offset, length ->
             val response = BaiduResponse(
                 name,
@@ -59,6 +58,7 @@ object BaiduEngine : CLog {
                 callback?.onError(Exception(it))
             }.subscribe()
         }
+        state.postValue(SpeechState.IDLE)
     }
 
     fun start(outfile: String = StorageUtil.AUDIO_PATH + "/" + System.currentTimeMillis() + ".pcm") {

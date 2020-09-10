@@ -2,7 +2,9 @@ package cn.darkfog.legionspeech.view
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.legionspeech.R
 import com.blankj.utilcode.util.AdaptScreenUtils
@@ -11,10 +13,6 @@ import com.yhao.floatwindow.FloatWindow
 import com.yhao.floatwindow.MoveType
 import com.yhao.floatwindow.Screen
 
-/**
- * 出发方式：点击
- * 状态：出错，识别中，处理中，空闲
- */
 object SpeechView {
 
     enum class ViewState(val id: Int) {
@@ -48,7 +46,12 @@ object SpeechView {
         icon = view.findViewById(R.id.content)
         view.setOnClickListener {
             when (state.value) {
-                ViewState.IDLE -> ""
+                ViewState.IDLE -> DialogManager.start()
+                ViewState.ERROR -> Toast.makeText(
+                    AppContextLinker.context,
+                    "出错了",
+                    Toast.LENGTH_LONG
+                ).show()
                 else -> ""
             }
         }

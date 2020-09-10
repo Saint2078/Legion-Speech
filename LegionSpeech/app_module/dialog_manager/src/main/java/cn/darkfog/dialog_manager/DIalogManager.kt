@@ -5,15 +5,14 @@ import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
 import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
-import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import cn.darkfog.speech_service.BaiduEngine
 
 object DialogManager {
 
     private var record = SpeechRecord()
+    val state = BaiduEngine.state
 
-
-    init {
+    fun init() {
         BaiduEngine.register(object : SpeechCallback {
             override fun onPartialAsrResult(result: ASR) {
                 //particalText.
@@ -30,16 +29,8 @@ object DialogManager {
             override fun onError(e: Exception) {
                 TODO("Not yet implemented")
             }
-
         })
-        BaiduEngine.state.observeForever {
-            when (it) {
-                SpeechState.IDLE -> Unit
-                SpeechState.PROCESS -> Unit
-                SpeechState.ERROR -> Unit
-
-            }
-        }
+        BaiduEngine.init()
     }
 
     fun start() {
