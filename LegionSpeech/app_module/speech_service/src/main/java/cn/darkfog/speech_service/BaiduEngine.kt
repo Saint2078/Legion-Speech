@@ -3,6 +3,7 @@ package cn.darkfog.speech_service
 import androidx.lifecycle.MutableLiveData
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
+import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
@@ -47,6 +48,8 @@ object BaiduEngine : CLog {
 
     fun init() {
         manager.registerListener { name, params, data, offset, length ->
+
+            if (name == "asr.audio") return@registerListener
             val response = BaiduResponse(
                 name,
                 params,
@@ -54,6 +57,9 @@ object BaiduEngine : CLog {
                 offset,
                 length
             )
+            logD {
+                response.toString()
+            }
             processBaiduResponse(response).doOnError {
                 callback?.onError(Exception(it))
             }.subscribe()
@@ -110,7 +116,8 @@ object BaiduEngine : CLog {
                         }
                     }
                 }
-                "asr.begin" -> state.postValue(SpeechState.PROCESS)
+                "asr.begin" -> state.postValue(SpeechState.LISTENING)
+                "asr.end" -> state.postValue(SpeechState.PROCESS)
                 "asr.finish" -> state.postValue(SpeechState.FINISH)
                 "asr.exit" -> state.postValue(SpeechState.IDLE)
                 else -> Unit
