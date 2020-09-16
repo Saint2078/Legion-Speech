@@ -8,4 +8,13 @@ data class ASR(
     override fun hashCode(): Int {
         return content.hashCode()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ASR
+        if (content != other.content) return false
+        return true
+    }
 }

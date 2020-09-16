@@ -7,5 +7,12 @@ data class SpeechRecord(
     var timestamp: Long = 0,
     var pcmFile: String? = null,
     var asr: ASR? = null,
-    var nlu: NLU? = null
+    var nlu: NLU? = null,
+    var state: SpeechRecordState = SpeechRecordState.UNKNOWN
 )
+
+enum class SpeechRecordState {
+    UNKNOWN,
+    FIXED,
+    RIGHT
+}

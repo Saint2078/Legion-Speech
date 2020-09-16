@@ -6,14 +6,19 @@ import io.reactivex.Single
 import java.io.*
 
 object StorageUtil {
+    private const val AUDIO_FILE = "audio"
+    private const val CACHE_FILE = "cache"
+
+    private const val ASR_RULE_FILE = "asr_rule"
+    private const val nlu_RULE_FILE = "asr_nlu"
 
     init {
-        AppContextLinker.context.getExternalFilesDir("audio")
-        AppContextLinker.context.getExternalFilesDir("cache")
+        AppContextLinker.context.getExternalFilesDir(AUDIO_FILE)
+        AppContextLinker.context.getExternalFilesDir(CACHE_FILE)
     }
 
-    val CACHE_PATH = AppContextLinker.context.getExternalFilesDir("cache")?.absolutePath
-    val AUDIO_PATH = AppContextLinker.context.getExternalFilesDir("audio")?.absolutePath
+    val CACHE_PATH = AppContextLinker.context.getExternalFilesDir(CACHE_FILE)?.absolutePath
+    val AUDIO_PATH = AppContextLinker.context.getExternalFilesDir(AUDIO_FILE)?.absolutePath
 
 
     fun <T : Serializable> getCache(modelClass: Class<T>, fileName: String): Single<T> {
@@ -33,4 +38,6 @@ object StorageUtil {
             it.onComplete()
         }
     }
+
+
 }
