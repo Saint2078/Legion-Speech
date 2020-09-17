@@ -6,14 +6,17 @@
 1。TTS
 2。NLU的部分
 
-
 1。FloatWindow
-
-
 
 ASRResult
 ASRRule
 NLURule
 
-
 Display的是个问题
+
+SpeechRecord added
+ASRRule added
+NLURule added
+
+Detail设计
+Card？

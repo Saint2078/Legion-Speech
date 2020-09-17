@@ -46,25 +46,28 @@ object BaiduEngine : CLog {
         send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
 
-    fun init() {
-        manager.registerListener { name, params, data, offset, length ->
+    fun init(): Completable {
+        return Completable.create {
+            manager.registerListener { name, params, data, offset, length ->
 
-            if (name == "asr.audio") return@registerListener
-            val response = BaiduResponse(
-                name,
-                params,
-                data?.let { String(it) },
-                offset,
-                length
-            )
-            logD {
-                response.toString()
+                if (name == "asr.audio") return@registerListener
+                val response = BaiduResponse(
+                    name,
+                    params,
+                    data?.let { String(it) },
+                    offset,
+                    length
+                )
+                logD {
+                    response.toString()
+                }
+                processBaiduResponse(response).doOnError {
+                    callback?.onError(Exception(it))
+                }.subscribe()
             }
-            processBaiduResponse(response).doOnError {
-                callback?.onError(Exception(it))
-            }.subscribe()
+            state.postValue(SpeechState.IDLE)
+            it.onComplete()
         }
-        state.postValue(SpeechState.IDLE)
     }
 
     fun start(outfile: String = StorageUtil.AUDIO_PATH + "/" + System.currentTimeMillis() + ".pcm") {

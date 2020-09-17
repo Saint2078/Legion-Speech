@@ -1,16 +1,32 @@
 package cn.darkfog.dialog_manager
 
+import cn.darkfog.dialog_manager.data.source.RecordRepository
 import cn.darkfog.dialog_manager.model.bean.SpeechRecord
 import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
 import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
+import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import cn.darkfog.speech_service.BaiduEngine
 
 object DialogManager {
 
     private var record = SpeechRecord()
     val state = BaiduEngine.state
+
+    //Dialog
+//    fun init():Completable{ return }
+//
+//    fun start(){ return}
+//
+//    fun stop(){ return }
+//
+//    fun cancel(){ return }
+
+    private object Private {
+
+
+    }
 
     fun init() {
         BaiduEngine.register(object : SpeechCallback {
@@ -31,6 +47,11 @@ object DialogManager {
             }
         })
         BaiduEngine.init()
+        state.observeForever {
+            when (it) {
+                SpeechState.FINISH -> RecordRepository.addSpeechRecord(record)
+            }
+        }
     }
 
     fun start() {
@@ -49,6 +70,4 @@ object DialogManager {
     fun cancel() {
         BaiduEngine.cancel()
     }
-
-
 }

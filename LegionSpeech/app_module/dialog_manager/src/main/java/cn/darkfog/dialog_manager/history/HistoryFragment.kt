@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -54,13 +55,23 @@ class HistoryFragment : Fragment() {
                         )
                     ), ::playOrDetail
                 )
+                addItemDecoration(
+                    DividerItemDecoration(
+                        this@HistoryFragment.context,
+                        DividerItemDecoration.HORIZONTAL
+                    )
+                )
             }
         }
         return view
     }
 
-    fun playOrDetail(type: String, record: SpeechRecord) {
-
+    fun playOrDetail(id: Int, record: SpeechRecord) {
+        when (id) {
+            R.id.play -> Unit
+            R.id.confirm -> Unit
+            R.id.detail -> Unit
+        }
     }
 
     companion object {
