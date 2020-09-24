@@ -15,7 +15,9 @@
         <service
             android:name=".DialogService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+
+        </service>
 
         <activity android:name=".MainActivity">
             <intent-filter>

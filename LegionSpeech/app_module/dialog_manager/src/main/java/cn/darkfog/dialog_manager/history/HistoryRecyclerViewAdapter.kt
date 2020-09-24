@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
 import cn.darkfog.dialog_manager.model.bean.SpeechRecord
+import cn.darkfog.dialog_manager.model.bean.SpeechRecordState
 
 class HistoryRecyclerViewAdapter(
     private val values: List<SpeechRecord>,
@@ -22,9 +23,12 @@ class HistoryRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = values[position]
+        if (record.state == SpeechRecordState.RIGHT) {
+            holder.confirm.visibility = View.GONE
+        }
 
         holder.asr.text = record.asr?.content
-        holder.nlu.text = record.nlu?.intent
+        holder.nlu.text = "Domian:${record.nlu?.domain}; Intent:${record.nlu?.intent}"
 
         holder.play.setOnClickListener {
             callback(it.id, record)

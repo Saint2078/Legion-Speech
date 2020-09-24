@@ -1,13 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".detail.DetailFragment">
+
+    <LinearLayout
+        android:id="@+id/asr"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/asr_promt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="语音识别结果" />
+
+        <TextView
+            android:id="@+id/rule_match"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="匹配规则:5条    点击查看" />
+
+        <TextView
+            android:id="@+id/asr_o"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="我要听周杰伦的歌" />
+
+        <TextView
+            android:id="@+id/asr_f"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="我要听周杰伦的歌" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/nlu"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/asr_promt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="语音识别结果" />
+
+        <TextView
+            android:id="@+id/rule_match"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="匹配规则:5条    点击查看" />
+
+        <TextView
+            android:id="@+id/asr_o"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="我要听周杰伦的歌" />
+
+        <TextView
+            android:id="@+id/asr_f"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:text="我要听周杰伦的歌" />
+
+    </LinearLayout>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="Hello" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
