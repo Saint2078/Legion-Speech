@@ -21,17 +21,17 @@
             android:text="语音识别结果" />
 
         <TextView
-            android:id="@+id/rule_match"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="匹配规则:5条    点击查看" />
-
-        <TextView
             android:id="@+id/asr_o"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
             android:text="我要听周杰伦的歌" />
+
+        <TextView
+            android:id="@+id/rule_match"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="匹配规则:5条    点击查看" />
 
         <TextView
             android:id="@+id/asr_f"
@@ -48,40 +48,36 @@
         android:layout_height="80dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/asr">
 
         <TextView
-            android:id="@+id/asr_promt"
+            android:id="@+id/nlu_promt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="语音识别结果" />
+            android:text="意图解析" />
 
         <TextView
-            android:id="@+id/rule_match"
+            android:id="@+id/nlu_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="匹配规则:5条    点击查看" />
+            android:text="自定义指令" />
 
         <TextView
-            android:id="@+id/asr_o"
+            android:id="@+id/asr_intent"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="我要听周杰伦的歌" />
+            android:text="打开APP" />
 
         <TextView
-            android:id="@+id/asr_f"
+            android:id="@+id/asr_slot"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="我要听周杰伦的歌" />
+            android:text="美团外卖" />
 
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
