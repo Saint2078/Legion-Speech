@@ -7,7 +7,6 @@ import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
-import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import cn.darkfog.speech_service.model.bean.BaiduNluResult
@@ -108,13 +107,13 @@ object BaiduEngine : CLog {
                                 ).results.sortedByDescending {
                                     it.score
                                 }[0]
-                                callback?.onFinalNluResult(
-                                    NLU(
-                                        nlu.domain,
-                                        nlu.intent,
-                                        nlu.slots.toNluSlots()
-                                    )
-                                )
+//                                callback?.onFinalNluResult(
+//                                    NLU(
+//                                        nlu.domain,
+//                                        nlu.intent,
+//                                        nlu.slots.toNluSlots()
+//                                    )
+//                                )
                             }
                         }
                     }

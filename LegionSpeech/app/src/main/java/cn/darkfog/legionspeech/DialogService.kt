@@ -12,7 +12,6 @@ class DialogService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        DialogManager.init()
         DialogManager.state.observeForever(Observer {
             when (it) {
                 SpeechState.IDLE -> SpeechView.setViewState(SpeechView.ViewState.IDLE)
@@ -23,6 +22,7 @@ class DialogService : Service() {
             }
         })
         SpeechView.show()
+
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
