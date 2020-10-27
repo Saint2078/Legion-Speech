@@ -1,5 +1,6 @@
 package cn.darkfog.speech_service
 
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
@@ -15,9 +16,13 @@ import cn.darkfog.speech_service.model.bean.BaiduPartialParams
 import cn.darkfog.speech_service.model.bean.BaiduResponse
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import org.json.JSONObject
+import java.lang.reflect.Type
 
 
 /**
@@ -141,5 +146,26 @@ object BaiduEngine : CLog {
         }
     }
 
+    object Test : JsonDeserializer<NLU> {
+        override fun deserialize(
+            element: JsonElement,
+            typeOfT: Type?,
+            context: JsonDeserializationContext?
+        ): NLU {
+            val result = element.asJsonObject.get("results").asJsonArray.sortedByDescending {
+                it.asJsonObject.get("score").asDouble
+            }[0].asJsonObject
+            val domain = result.get("domain").asString
+            val intent = result.get("intent").asString
+            val slots = Bundle().apply {
+                val data = result.get("slots").asJsonObject
+                data.keySet().forEach {
+                    putString(it, data.getAsJsonObject(it).get("word").asString)
+                }
+            }
+            return NLU(domain, intent, slots)
+        }
+
+    }
 
 }
