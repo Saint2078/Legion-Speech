@@ -11,15 +11,14 @@ import cn.darkfog.speech_protocol.speech.bean.ASR
 import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import cn.darkfog.speech_protocol.speech.bean.SpeechState
-import cn.darkfog.speech_service.model.bean.BaiduNluResult
 import cn.darkfog.speech_service.model.bean.BaiduPartialParams
 import cn.darkfog.speech_service.model.bean.BaiduResponse
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import org.json.JSONObject
 import java.lang.reflect.Type
@@ -58,6 +57,8 @@ object BaiduEngine : CLog {
         //设置离线引擎
         send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
+    private val gson =
+        GsonBuilder().registerTypeHierarchyAdapter(NLU::class.java, NLUJsonDeserializer).create()
 
     fun init(speechCallback: SpeechCallback): Completable {
         return Completable.create {
@@ -108,31 +109,26 @@ object BaiduEngine : CLog {
                     val params =
                         GsonHelper.gson.fromJson(response.params, BaiduPartialParams::class.java)
 
-                    logD {
-                        GsonHelper.gson.fromJson(
-                            response.params,
-                            object : TypeToken<HashMap<String, String>>() {}.type
-                        )
-                    }
-
                     when (params.result_type) {
                         "partial_result" -> callback?.onPartialAsrResult(ASR(params.best_result))
                         "final_result" -> callback?.onFinalAsrResult(ASR(params.best_result))
                         "nlu_result" -> {
                             response.data?.let {
-                                val nlu = GsonHelper.gson.fromJson(
+
+                                val nlu = gson.fromJson(
                                     response.data,
-                                    BaiduNluResult::class.java
-                                ).results.sortedByDescending {
-                                    it.score
-                                }[0]
-                                callback?.onFinalNluResult(
-                                    NLU(
-                                        nlu.domain,
-                                        nlu.intent,
-                                        nlu.slots.toBundle()
-                                    )
+                                    NLU::class.java
                                 )
+                                logD { nlu.toString() }
+
+//
+//                                callback?.onFinalNluResult(
+//                                    NLU(
+//                                        nlu.domain,
+//                                        nlu.intent,
+//                                        nlu.slots.toBundle()
+//                                    )
+//                                )
                             }
                         }
                     }
@@ -146,24 +142,30 @@ object BaiduEngine : CLog {
         }
     }
 
-    object Test : JsonDeserializer<NLU> {
+    object NLUJsonDeserializer : JsonDeserializer<NLU> {
         override fun deserialize(
             element: JsonElement,
             typeOfT: Type?,
             context: JsonDeserializationContext?
         ): NLU {
-            val result = element.asJsonObject.get("results").asJsonArray.sortedByDescending {
-                it.asJsonObject.get("score").asDouble
-            }[0].asJsonObject
-            val domain = result.get("domain").asString
-            val intent = result.get("intent").asString
-            val slots = Bundle().apply {
-                val data = result.get("slots").asJsonObject
-                data.keySet().forEach {
-                    putString(it, data.getAsJsonObject(it).get("word").asString)
+            val results = element.asJsonObject.get("results").asJsonArray
+            if (results.asJsonArray.size() > 0) {
+                val result = element.asJsonObject.get("results").asJsonArray.sortedByDescending {
+                    it.asJsonObject.get("score").asDouble
+                }[0].asJsonObject
+                val domain = result.get("domain").asString
+                val intent = result.get("intent").asString
+                val slots = Bundle().apply {
+                    val data = result.get("slots").asJsonObject
+                    data.keySet().forEach {
+                        putString(it, data.getAsJsonArray(it)[0].asJsonObject.get("word").asString)
+                    }
                 }
+                return NLU(domain, intent, slots)
+            } else {
+                return NLU("", "", Bundle())
             }
-            return NLU(domain, intent, slots)
+
         }
 
     }

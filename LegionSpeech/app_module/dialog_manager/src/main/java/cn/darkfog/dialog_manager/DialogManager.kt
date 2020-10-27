@@ -19,7 +19,6 @@ object DialogManager : CLog {
     val state = MutableLiveData<SpeechState>(SpeechState.ERROR)
     val callback = object : SpeechCallback {
         override fun onPartialAsrResult(result: ASR) {
-            //particalText.
             logD {
                 result.toString()
             }
