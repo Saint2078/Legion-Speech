@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), CLog {
     }
 
     fun requestPermissionsSuc() {
-        BaiduEngine.register(object : SpeechCallback() {
+        BaiduEngine.register(object : SpeechCallback {
             override fun onPartialAsrResult(result: ASR) {
                 content.text = "${content.text} onPartialAsrResult : ${result.content}\n"
             }

@@ -7,6 +7,7 @@ import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech_protocol.speech.bean.ASR
+import cn.darkfog.speech_protocol.speech.bean.NLU
 import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
 import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import cn.darkfog.speech_service.model.bean.BaiduNluResult
@@ -14,10 +15,18 @@ import cn.darkfog.speech_service.model.bean.BaiduPartialParams
 import cn.darkfog.speech_service.model.bean.BaiduResponse
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
+import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import org.json.JSONObject
 
+
+/**
+ * state和返回值分离
+ *
+ */
 object BaiduEngine : CLog {
+    override val logTag: String
+        get() = super.logTag
     val state = MutableLiveData(SpeechState.ERROR)
     private var callback: SpeechCallback? = null
     private val recogParams =
@@ -45,8 +54,9 @@ object BaiduEngine : CLog {
         send(SpeechConstant.ASR_KWS_LOAD_ENGINE, offlineParams, null, 0, 0)
     }
 
-    fun init(): Completable {
+    fun init(speechCallback: SpeechCallback): Completable {
         return Completable.create {
+            callback = speechCallback
             manager.registerListener { name, params, data, offset, length ->
 
                 if (name == "asr.audio") return@registerListener
@@ -86,16 +96,20 @@ object BaiduEngine : CLog {
         manager.send(SpeechConstant.ASR_STOP, "{}", null, 0, 0)
     }
 
-    fun register(speechCallback: SpeechCallback) {
-        callback = speechCallback
-    }
-
     private fun processBaiduResponse(response: BaiduResponse): Completable {
         return Completable.create {
             when (response.name) {
                 "asr.partial" -> {
                     val params =
                         GsonHelper.gson.fromJson(response.params, BaiduPartialParams::class.java)
+
+                    logD {
+                        GsonHelper.gson.fromJson(
+                            response.params,
+                            object : TypeToken<HashMap<String, String>>() {}.type
+                        )
+                    }
+
                     when (params.result_type) {
                         "partial_result" -> callback?.onPartialAsrResult(ASR(params.best_result))
                         "final_result" -> callback?.onFinalAsrResult(ASR(params.best_result))
@@ -107,13 +121,13 @@ object BaiduEngine : CLog {
                                 ).results.sortedByDescending {
                                     it.score
                                 }[0]
-//                                callback?.onFinalNluResult(
-//                                    NLU(
-//                                        nlu.domain,
-//                                        nlu.intent,
-//                                        nlu.slots.toNluSlots()
-//                                    )
-//                                )
+                                callback?.onFinalNluResult(
+                                    NLU(
+                                        nlu.domain,
+                                        nlu.intent,
+                                        nlu.slots.toBundle()
+                                    )
+                                )
                             }
                         }
                     }

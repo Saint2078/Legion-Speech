@@ -22,7 +22,6 @@ class DialogService : Service() {
             }
         })
         SpeechView.show()
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

@@ -1,6 +1,6 @@
 package cn.darkfog.speech_service.model.bean
 
-import org.json.JSONObject
+import android.os.Bundle
 
 data class BaiduNluResult(
     val appid: Int,
@@ -15,5 +15,23 @@ data class NLUResult(
     val domain: String,
     val intent: String,
     val score: Double,
-    val slots: JSONObject
+    val slots: Slots
+)
+
+data class Slots(
+    val user_singer_name: List<Bean>,
+    val user_music_name: List<Bean>
+) {
+    fun toBundle(): Bundle {
+        return Bundle().apply {
+            if (user_singer_name.isNotEmpty()) {
+                putString("singer_name", user_singer_name[0].word)
+            }
+        }
+    }
+}
+
+data class Bean(
+    val norm: String,
+    val word: String
 )

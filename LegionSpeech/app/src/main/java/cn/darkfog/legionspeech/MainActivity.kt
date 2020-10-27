@@ -9,46 +9,62 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.log.CLog
+import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
+/**
+ * 权限申请有问题，先申请普通权限
+ *
+ */
 class MainActivity : AppCompatActivity(), CLog {
+    var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        requestPermissionIfNeeded()
-        speechInit()
+        count = 0
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         if (!Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "申请悬浮窗权限失败", Toast.LENGTH_LONG).show()
-            finish()
+            if (count < 1) {
+                count += 1
+                requestWindow()
+            } else {
+                content.text = "${content.text}没有悬浮窗权限，请重新启动或提供权限\n"
+            }
+        } else {
+            requestPermissionIfNeeded()
         }
     }
 
+
     private fun speechInit() {
-        DialogManager.init()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {
+        if (DialogManager.state.value == SpeechState.ERROR) {
+            DialogManager.init()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : CompletableObserver {
+                    override fun onSubscribe(d: Disposable) {
 
-                }
+                    }
 
-                override fun onComplete() {
-                    content.text = "${content.text}引擎初始化成功\n"
-                    AndroidSchedulers.mainThread().scheduleDirect({ finish() }, 3, TimeUnit.SECONDS)
-                }
+                    override fun onComplete() {
+                        content.text = "${content.text}引擎初始化成功\n"
+                        content.text = "${content.text}此界面将于3秒后自动关闭\n"
+                        AndroidSchedulers.mainThread()
+                            .scheduleDirect({ finish() }, 3, TimeUnit.SECONDS)
+                    }
 
-                override fun onError(e: Throwable) {
-                    content.text = "${content.text}引擎初始化失败\n"
-                }
-            })
+                    override fun onError(e: Throwable) {
+                        content.text = "${content.text}引擎初始化失败\n"
+                    }
+                })
+        }
     }
 
     private fun requestPermissionIfNeeded() {
@@ -73,16 +89,13 @@ class MainActivity : AppCompatActivity(), CLog {
     }
 
     private fun requestPermissionsSuc() {
-        startService(Intent(this, DialogService::class.java))
         content.text = "${content.text}权限申请成功\n"
-        if (!Settings.canDrawOverlays(this)) {
-            requestWindow()
-        }
+        speechInit()
+        startService(Intent(this, DialogService::class.java))
     }
 
     private fun requestPermissionsFail() {
         Toast.makeText(this, "权限申请失败", Toast.LENGTH_LONG).show()
-        finish()
     }
 
     private fun requestWindow() {
@@ -91,8 +104,7 @@ class MainActivity : AppCompatActivity(), CLog {
                 Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:$packageName")
             ), 1
-        );
+        )
     }
-
 
 }
