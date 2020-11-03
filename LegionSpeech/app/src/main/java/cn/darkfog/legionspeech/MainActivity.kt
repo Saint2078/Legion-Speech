@@ -16,9 +16,6 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
-/**
- * 权限申请有问题，先申请普通权限
- */
 class MainActivity : AppCompatActivity(), CLog {
     var count = 0
 
