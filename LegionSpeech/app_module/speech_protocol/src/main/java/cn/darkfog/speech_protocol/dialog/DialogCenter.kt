@@ -1,7 +1,5 @@
 package cn.darkfog.speech_protocol.dialog
 
-import cn.darkfog.speech_protocol.speech.bean.NluResult
-
 //可以用kapt优化
 //跟view状态绑定的方案有思路了
 

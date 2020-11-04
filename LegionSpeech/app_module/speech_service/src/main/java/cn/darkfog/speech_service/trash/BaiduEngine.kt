@@ -1,4 +1,4 @@
-package cn.darkfog.speech_service
+package cn.darkfog.speech_service.trash
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -7,12 +7,10 @@ import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.foundation.util.StorageUtil
-import cn.darkfog.speech_protocol.speech.bean.ASR
-import cn.darkfog.speech_protocol.speech.bean.NLU
-import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
-import cn.darkfog.speech_protocol.speech.bean.SpeechState
-import cn.darkfog.speech_service.model.bean.BaiduPartialParams
-import cn.darkfog.speech_service.model.bean.BaiduResponse
+import cn.darkfog.speech_protocol.speech.SpeechEngine
+import cn.darkfog.speech_service.R
+import cn.darkfog.speech_service.trash.bean.BaiduPartialParams
+import cn.darkfog.speech_service.trash.bean.BaiduResponse
 import com.baidu.speech.EventManagerFactory
 import com.baidu.speech.asr.SpeechConstant
 import com.google.gson.GsonBuilder
@@ -28,7 +26,7 @@ import java.lang.reflect.Type
  * state和返回值分离
  *
  */
-object BaiduEngine : CLog {
+object BaiduEngine : SpeechEngine(),CLog {
     override val logTag: String
         get() = super.logTag
     val state = MutableLiveData(SpeechState.ERROR)

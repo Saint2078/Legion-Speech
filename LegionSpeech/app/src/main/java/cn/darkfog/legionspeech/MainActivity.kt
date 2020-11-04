@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.log.CLog
-import cn.darkfog.speech_protocol.speech.bean.SpeechState
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

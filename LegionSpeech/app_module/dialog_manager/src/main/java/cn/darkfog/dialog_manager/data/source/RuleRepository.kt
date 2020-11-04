@@ -3,7 +3,6 @@ package cn.darkfog.dialog_manager.data.source
 import cn.darkfog.dialog_manager.model.bean.ASRRule
 import cn.darkfog.dialog_manager.model.bean.NLURule
 import cn.darkfog.foundation.util.StorageUtil
-import cn.darkfog.speech_protocol.speech.bean.ASR
 import io.reactivex.Completable
 import java.util.*
 

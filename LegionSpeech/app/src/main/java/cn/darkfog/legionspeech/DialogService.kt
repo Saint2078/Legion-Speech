@@ -6,7 +6,6 @@ import android.os.IBinder
 import androidx.lifecycle.Observer
 import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.legionspeech.view.SpeechView
-import cn.darkfog.speech_protocol.speech.bean.SpeechState
 
 class DialogService : Service() {
 

@@ -2,8 +2,6 @@ package cn.darkfog.dialog_manager
 
 import android.os.Bundle
 import cn.darkfog.dialog_manager.model.bean.SpeechRecord
-import cn.darkfog.speech_protocol.speech.bean.ASR
-import cn.darkfog.speech_protocol.speech.bean.NLU
 
 object MapManager {
 

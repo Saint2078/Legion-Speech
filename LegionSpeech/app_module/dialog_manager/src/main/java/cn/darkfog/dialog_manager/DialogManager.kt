@@ -6,11 +6,7 @@ import cn.darkfog.dialog_manager.model.bean.SpeechRecord
 import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.StorageUtil
-import cn.darkfog.speech_protocol.speech.bean.ASR
-import cn.darkfog.speech_protocol.speech.bean.NLU
-import cn.darkfog.speech_protocol.speech.bean.SpeechCallback
-import cn.darkfog.speech_protocol.speech.bean.SpeechState
-import cn.darkfog.speech_service.BaiduEngine
+import cn.darkfog.speech_service.trash.BaiduEngine
 import io.reactivex.Completable
 
 object DialogManager : CLog {

@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.darkfog.dialog_manager.R
 import cn.darkfog.dialog_manager.model.bean.SpeechRecord
-import cn.darkfog.speech_protocol.speech.bean.ASR
-import cn.darkfog.speech_protocol.speech.bean.NLU
 
 /**
  * A fragment representing a list of Items.

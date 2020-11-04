@@ -1,4 +1,4 @@
-package cn.darkfog.speech_service.model.bean
+package cn.darkfog.speech_service.trash.bean
 
 data class BaiduResponse(
     val name: String?,

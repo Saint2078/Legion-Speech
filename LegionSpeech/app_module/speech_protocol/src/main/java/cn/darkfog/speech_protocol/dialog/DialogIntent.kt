@@ -1,7 +1,5 @@
 package cn.darkfog.speech_protocol.dialog
 
-import cn.darkfog.speech_protocol.speech.bean.NluResult
-
 abstract class DialogIntent {
     open val INTENT = ""
 
