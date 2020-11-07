@@ -10,7 +10,7 @@ abstract class SpeechEngine(
     val state: MutableLiveData<SpeechState> = MutableLiveData(SpeechState.NOT_INTI)
 ) {
 
-    abstract fun init(): Completable
+    abstract fun init(extra: Bundle? = null): Completable
 
     abstract fun startWakeUp(extra: Bundle? = null): Observable<SpeechEvent>
 
@@ -36,6 +36,9 @@ data class SpeechEvent(
 )
 
 enum class SpeechEventType {
+    VAD_START,
+    VAD_END,
+    ASR_WUW,
     ASR_PARTIAL,
     ASR_LOCAL,
     ASR_CLOUD,
