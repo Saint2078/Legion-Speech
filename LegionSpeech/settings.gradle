@@ -1,3 +1,4 @@
+include ':app_module:speech_protocol:speech'
 include ':app_module:resource'
 include ':app_test:speech_protocol_test'
 include ':app_test:dialog_manager_test'
