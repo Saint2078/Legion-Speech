@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="bdasr_V3_20191210_81acdf5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/LegionSpeech/app_module/speech_service/libs/bdasr_V3_20191210_81acdf5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
