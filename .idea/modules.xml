@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/resource/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/resource/src/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app/app.iml" filepath="$PROJECT_DIR$/LegionSpeech/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/dialog_manager/dialog_manager.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/dialog_manager/dialog_manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_test/dialog_manager_test/dialog_manager_test.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_test/dialog_manager_test/dialog_manager_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/foundation/foundation.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/foundation/foundation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/resource/src/main/main.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/resource/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/protocol/proxy/proxy.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/protocol/proxy/proxy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/protocol/redirect/redirect.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/protocol/redirect/redirect.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/speech_protocol/speech/speech.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/speech_protocol/speech/speech.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/speech_protocol/src/speech_protocol.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/speech_protocol/src/speech_protocol.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_test/speech_protocol_test/speech_protocol_test.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_test/speech_protocol_test/speech_protocol_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/speech_service/speech_service.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/speech_service/speech_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_test/speech_service_test/speech_service_test.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_test/speech_service_test/speech_service_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/protocol/stt/stt.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/protocol/stt/stt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LegionSpeech/app_module/resource/src/test/test.iml" filepath="$PROJECT_DIR$/LegionSpeech/app_module/resource/src/test/test.iml" />
+    </modules>
+  </component>
+</project>
