@@ -36,4 +36,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
+    implementation project(path: ':app_module:resource')
+    implementation project(path: ':app_module:proxy')
+
 }

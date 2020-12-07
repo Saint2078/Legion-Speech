@@ -11,8 +11,6 @@ abstract class AbstractSTTEngine {
 
     abstract fun init(): Completable
 
-    abstract fun initSpeech(extra: Bundle? = null): Completable
-
     abstract fun startWakeUp(
         keyWords: Array<String>
     ): Observable<SpeechEvent>
