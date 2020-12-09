@@ -1,4 +1,4 @@
-package cn.darkfog.protocol.stt
+package cn.darkfog.speech.protocol.stt
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
@@ -9,17 +9,21 @@ abstract class AbstractSTTEngine {
 
     val state: MutableLiveData<State> = MutableLiveData(State.NOT_INIT)
 
-    abstract fun init(): Completable
+    abstract fun init(
+        extra: Bundle? = null
+    ): Completable
 
     abstract fun startWakeUp(
-        keyWords: Array<String>
+        extra: Bundle? = null
     ): Observable<SpeechEvent>
 
     abstract fun startRecognize(
         extra: Bundle? = null
     ): Observable<SpeechEvent>
 
-    abstract fun stop(): Completable
+    abstract fun stop(
+        extra: Bundle? = null
+    ): Completable
 
     abstract fun releaseSpeech(): Completable
 }

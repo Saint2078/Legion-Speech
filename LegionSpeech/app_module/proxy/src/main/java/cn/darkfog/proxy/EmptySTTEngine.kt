@@ -1,8 +1,8 @@
 package cn.darkfog.proxy
 
 import android.os.Bundle
-import cn.darkfog.protocol.stt.AbstractSTTEngine
-import cn.darkfog.protocol.stt.SpeechEvent
+import cn.darkfog.speech.protocol.stt.AbstractSTTEngine
+import cn.darkfog.speech.protocol.stt.SpeechEvent
 import io.reactivex.Completable
 import io.reactivex.Observable
 

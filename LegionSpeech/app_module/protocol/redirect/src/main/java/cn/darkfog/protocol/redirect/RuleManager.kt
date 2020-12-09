@@ -1,7 +1,7 @@
 package cn.darkfog.protocol.redirect
 
-import cn.darkfog.protocol.stt.ASR
-import cn.darkfog.protocol.stt.NLU
+import cn.darkfog.speech.protocol.stt.ASR
+import cn.darkfog.speech.protocol.stt.NLU
 import io.reactivex.Completable
 import io.reactivex.Single
 

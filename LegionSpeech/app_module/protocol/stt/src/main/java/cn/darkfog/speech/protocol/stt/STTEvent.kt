@@ -1,4 +1,4 @@
-package cn.darkfog.protocol.stt
+package cn.darkfog.speech.protocol.stt
 
 import java.io.Serializable
 
@@ -12,7 +12,7 @@ enum class EventType {
     VAD_END,
     ASR_WUW,
     ASR_LOCAL,
-    AER_PARTIAL,
+    ASR_PARTIAL,
     ASR_CLOUD,
     NLU_LOCAL,
     NLU_CLOUD,

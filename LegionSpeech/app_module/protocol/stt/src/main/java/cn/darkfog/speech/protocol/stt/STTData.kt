@@ -1,4 +1,4 @@
-package cn.darkfog.protocol.stt
+package cn.darkfog.speech.protocol.stt
 
 import android.os.Bundle
 import java.io.Serializable
@@ -9,7 +9,7 @@ data class ASR(
 ) : Serializable
 
 data class NLU(
-    // TODO: 2020/12/1 add parser 
+    // TODO: 2020/12/1 add parser
     val domain: String,
     val intent: String,
     val slots: Bundle,

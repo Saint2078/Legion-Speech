@@ -1,6 +1,6 @@
 package cn.darkfog.proxy
 
-import cn.darkfog.protocol.stt.AbstractSTTEngine
+import cn.darkfog.speech.protocol.stt.AbstractSTTEngine
 import io.reactivex.Completable
 
 object MyProxy {
