@@ -1,4 +1,5 @@
-include ':app_module:protocol-impl:baidu:Engine'
+include ':app_module:protocol-impl:baidu:baiduenginetest'
+include ':app_module:protocol-impl:baidu:engine'
 include ':app_module:proxy'
 include ':app_module:protocol:redirect'
 include ':app_module:protocol:proxy'

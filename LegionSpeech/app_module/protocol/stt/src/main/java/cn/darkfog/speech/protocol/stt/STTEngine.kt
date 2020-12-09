@@ -35,3 +35,7 @@ enum class State {
     PROCESSING,
     ERROR
 }
+
+object STTConstants {
+    const val KEY_OF_OUTFILE = "OUTFILE"
+}

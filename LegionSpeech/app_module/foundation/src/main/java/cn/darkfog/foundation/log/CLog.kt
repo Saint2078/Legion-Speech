@@ -20,11 +20,11 @@ inline fun CLog.logE(block: () -> String?) {
 }
 
 inline fun CLog.logE(throwable: Throwable, block: (() -> String?)) {
-    Logger.t(logTag).e(block.invoke() ?: "",throwable)
+    Logger.t(logTag).e(throwable, block.invoke() ?: "")
 }
 
 inline fun CLog.logE(tag: String, throwable: Throwable, block: () -> String?) {
-    Logger.t(tag).e(block.invoke() ?: "",throwable)
+    Logger.t(tag).e(throwable, block.invoke() ?: "")
 }
 
 inline fun CLog.logI(block: () -> String?) {

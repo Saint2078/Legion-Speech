@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class SpeechEvent(
     val type: EventType,
-    val data: Serializable?
+    val data: Serializable? = null
 )
 
 enum class EventType {

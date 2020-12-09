@@ -10,6 +10,7 @@ data class ASR(
 
 data class NLU(
     // TODO: 2020/12/1 add parser
+    val parsedText: String,
     val domain: String,
     val intent: String,
     val slots: Bundle,
