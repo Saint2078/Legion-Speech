@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('MixTTS_2.1.42_20200508.aar'))

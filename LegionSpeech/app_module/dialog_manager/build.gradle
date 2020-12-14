@@ -38,5 +38,8 @@ dependencies {
 
     implementation project(path: ':app_module:resource')
     implementation project(path: ':app_module:proxy')
+    implementation project(path: ':app_module:tts')
+
+    implementation project(path: ':app_module:protocol-impl:baidu:engine')
 
 }

@@ -15,3 +15,5 @@ include ':app_module:foundation'
 include ':app'
 include ':app_module:protocol:stt'
 rootProject.name = "LegionSpeech"
+
+include ':app_module:tts'

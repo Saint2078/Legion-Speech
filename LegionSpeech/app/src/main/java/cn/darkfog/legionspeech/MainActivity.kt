@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.darkfog.dialog_manager.Callback
 import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.log.CLog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), CLog {
+class MainActivity : AppCompatActivity(), CLog, Callback {
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,26 +40,22 @@ class MainActivity : AppCompatActivity(), CLog {
 
 
     private fun speechInit() {
-        if (DialogManager.state.value == SpeechState.ERROR) {
-            DialogManager.init()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : CompletableObserver {
-                    override fun onSubscribe(d: Disposable) {
+        DialogManager.init()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {
 
-                    }
+                }
 
-                    override fun onComplete() {
-                        content.text = "${content.text}引擎初始化成功\n"
-                        content.text = "${content.text}此界面将于3秒后自动关闭\n"
-                        AndroidSchedulers.mainThread()
-                            .scheduleDirect({ finish() }, 3, TimeUnit.SECONDS)
-                    }
+                override fun onComplete() {
+                    content.text = "${content.text}初始化成功\n"
+                    DialogManager.callback = this@MainActivity
+                }
 
-                    override fun onError(e: Throwable) {
-                        content.text = "${content.text}引擎初始化失败\n"
-                    }
-                })
-        }
+                override fun onError(e: Throwable) {
+                    content.text = "${content.text}引擎初始化失败\n"
+                }
+            })
     }
 
     private fun requestPermissionIfNeeded() {
@@ -100,6 +96,10 @@ class MainActivity : AppCompatActivity(), CLog {
                 Uri.parse("package:$packageName")
             ), 1
         )
+    }
+
+    override fun onText(text: String) {
+        content.text = "${content.text}$text\n"
     }
 
 }
