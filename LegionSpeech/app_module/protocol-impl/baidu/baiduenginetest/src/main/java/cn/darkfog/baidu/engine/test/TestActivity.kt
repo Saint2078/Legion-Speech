@@ -10,7 +10,7 @@ import io.reactivex.CompletableObserver
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_test.*
 
 class TestActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -62,7 +62,7 @@ class TestActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_test)
         requestPermissionIfNeeded()
         wp.setOnClickListener(this)
         asr.setOnClickListener(this)
