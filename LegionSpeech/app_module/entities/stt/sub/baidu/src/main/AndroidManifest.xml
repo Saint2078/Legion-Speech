@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.darkfog.speech.engine">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+        <meta-data
+            android:name="com.baidu.speech.APP_ID"
+            android:value="16749257" />
+
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="hlRN25tWVeYn3fAhMXyT9Mod" />
+
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="sBQifKVDAvxIiUjz8iTKNvb94GnUNBxh" />
+
+        <service
+            android:name="com.baidu.speech.VoiceRecognitionService"
+            android:exported="false" />
+    </application>
+
+</manifest>

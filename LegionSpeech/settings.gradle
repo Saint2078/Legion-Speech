@@ -1,19 +1,31 @@
-include ':app_module:protocol-impl:baidu:baiduenginetest'
-include ':app_module:protocol-impl:baidu:engine'
-include ':app_module:proxy'
-include ':app_module:protocol:redirect'
-include ':app_module:protocol:proxy'
-include ':app_module:speech_protocol:speech'
-include ':app_module:resource'
-include ':app_test:speech_protocol_test'
-include ':app_test:dialog_manager_test'
-include ':app_test:speech_service_test'
-include ':app_module:speech_protocol'
-include ':app_module:dialog_manager'
-include ':app_module:speech_service'
-include ':app_module:foundation'
-include ':app'
-include ':app_module:protocol:stt'
-rootProject.name = "LegionSpeech"
+//include ':app_module:protocol-impl:baidu:baiduenginetest'
+//include ':app_module:protocol-impl:baidu:engine'
+//include ':app_module:proxy'
+//include ':app_module:protocol:redirect'
+//include ':app_module:protocol:proxy'
+//include ':app_module:speech_protocol:speech'
+//include ':app_module:resource'
+//include ':app_test:speech_protocol_test'
+//include ':app_test:dialog_manager_test'
+//include ':app_test:speech_service_test'
+//include ':app_module:speech_protocol'
+//include ':app_module:entitied:manager:dialog_manager'
+//include ':app_module:speech_service'
+//include ':app_module:foundation'
+//include ':app'
+//include ':app_module:protocol:stt'
+//include ':app_module:tts'
 
-include ':app_module:tts'
+/*base*/
+include ':app_module:base:foundation'
+
+/*entities*/
+/*stt*/
+include ':app_module:entities:stt'
+include ':app_module:entities:stt:sub:baidu'
+
+
+include ':app_module:entities:stt_ts'
+
+
+rootProject.name = "LegionSpeech"
