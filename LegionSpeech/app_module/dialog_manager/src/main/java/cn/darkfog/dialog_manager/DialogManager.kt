@@ -1,6 +1,7 @@
 package cn.darkfog.dialog_manager
 
 import cn.darkfog.BaiduEngine
+import cn.darkfog.dialog_manager.dialog.TaskRepository
 import cn.darkfog.dialog_manager.rule.RuleRepository
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
@@ -9,12 +10,13 @@ import cn.darkfog.foundation.log.logE
 import cn.darkfog.speech.protocol.stt.*
 import com.jdai.tts.*
 import io.reactivex.Completable
+import io.reactivex.CompletableEmitter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import java.util.*
-import java.util.function.Function
+import kotlin.collections.HashMap
 
-object DialogManager : CLog, TTSEngineListener {
+object DialogManager : CLog {
 
     val engine: AbstractSTTEngine = BaiduEngine
     var callback: Callback? = null
@@ -111,58 +113,17 @@ object DialogManager : CLog, TTSEngineListener {
     fun startDialog() {
         engine.startRecognize()
             .filter { it.type == EventType.NLU_CLOUD }
-            .map<NLU>{
+            .map<NLU> {
                 RuleRepository.getTargetRule(it.type as NLU)
             }.map {
-                
+                TaskRepository.handlerNLU(it)
+            }.singleOrError()
+            .flatMapCompletable {
+                Completable.complete()
             }
-            .map(Function<SpeechEvent,>)
-
-//            .
-//            .subscribe(object : Observer<SpeechEvent> {
-//                override fun onSubscribe(d: Disposable) {
-//
-//                }
-//
-//                override fun onNext(t: SpeechEvent) {
-//                    when (t.type) {
-//                        EventType.ASR_WUW, EventType.VAD_START, EventType.VAD_END -> Unit
-//                        EventType.ASR_PARTIAL -> {
-//                            val text = (t.data as ASR).text
-//
-//                        }
-//                        EventType.ASR_CLOUD -> {
-//                            val text = (t.data as ASR).text
-//
-//                        }
-//
-//                        EventType.NLU_CLOUD -> {
-//                            val nlu = t.data as NLU
-//                            val words = nlu.parsedText.split(" ")
-//                            words.forEach {
-//                                if (responseMap.containsKey(it)) {
-//
-//                                }
-//                            }
-//                        }
-//                        EventType.NLU_LOCAL -> {
-//                            val nlu = t.data as NLU
-//                        }
-
-                    }
-                    logD { "识别事件：$t" }
-                }
-
-                override fun onError(e: Throwable) {
-                    logE(e) { "识别出错" }
-                }
-
-                override fun onComplete() {
-                    logD { "识别结束" }
-                }
-
-            })
-
+            .doOnComplete { }
+            .doOnError { }
+            .subscribe()
     }
 
     fun speak(text: String) {
@@ -170,60 +131,6 @@ object DialogManager : CLog, TTSEngineListener {
         ttsEngine.speak(text, uuid)
     }
 
-    override fun onSynthesizeStart(p0: String?) {
-        Unit
-    }
-
-    override fun onSynthesizeFirstPackage(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSynthesizeDataArrived(
-        p0: String?,
-        p1: ByteArray?,
-        p2: Int,
-        p3: Double,
-        p4: String?
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSynthesizeFinish(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayStart(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayProgressChanged(p0: String?, p1: Double) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayPause(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayResume(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayFinish(p0: String?) {
-        logD { "播放${p0}结束" }
-        startWakeUp()
-    }
-
-    override fun onError(p0: String?, p1: TTSErrorCode?) {
-        logE { "播放${p0}出错 : $p1" }
-    }
-
-    override fun onBufValid(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun onTry(p0: String?, p1: TTSErrorCode?) {
-        TODO("Not yet implemented")
-    }
 
 
 //    fun startDialog(){
@@ -307,6 +214,66 @@ object DialogManager : CLog, TTSEngineListener {
 //            }
 //        }
 //    }
+}
+
+object Listener : TTSEngineListener {
+
+    var emitters: HashMap<String?, CompletableEmitter?> = HashMap()
+
+    override fun onSynthesizeStart(p0: String?) {
+        Unit
+    }
+
+    override fun onSynthesizeFirstPackage(p0: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSynthesizeDataArrived(
+        p0: String?,
+        p1: ByteArray?,
+        p2: Int,
+        p3: Double,
+        p4: String?
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSynthesizeFinish(p0: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayStart(p0: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayProgressChanged(p0: String?, p1: Double) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayPause(p0: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayResume(p0: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onPlayFinish(p0: String?) {
+        DialogManager.startWakeUp()
+    }
+
+    override fun onError(p0: String?, p1: TTSErrorCode?) {
+        logE { "播放${p0}出错 : $p1" }
+    }
+
+    override fun onBufValid(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun onTry(p0: String?, p1: TTSErrorCode?) {
+        TODO("Not yet implemented")
+    }
+
 }
 
 interface Callback {
