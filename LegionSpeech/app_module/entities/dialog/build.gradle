@@ -12,9 +12,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,6 +30,5 @@ android {
 }
 
 dependencies {
-    api project(path: ':app_module:base:foundation')
-    implementation project(':app_module:entities:stt')
+    implementation project(path: ':app_module:base:foundation')
 }
