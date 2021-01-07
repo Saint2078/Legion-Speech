@@ -1,3 +1,5 @@
+include ':app_module:manager:domain'
+include ':app_module:manager:dialog'
 //include ':app_module:protocol-impl:baidu:baiduenginetest'
 //include ':app_module:protocol-impl:baidu:engine'
 //include ':app_module:proxy'
@@ -27,5 +29,6 @@ include ':app_module:entities:stt:sub:baidu'
 
 include ':app_module:entities:stt_ts'
 
+include ':app_module:manager'
 
 rootProject.name = "LegionSpeech"
