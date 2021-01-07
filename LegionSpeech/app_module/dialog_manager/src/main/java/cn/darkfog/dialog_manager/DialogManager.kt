@@ -1,6 +1,7 @@
 package cn.darkfog.dialog_manager
 
 import cn.darkfog.BaiduEngine
+import cn.darkfog.dialog_manager.rule.RuleRepository
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
@@ -11,6 +12,7 @@ import io.reactivex.Completable
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import java.util.*
+import java.util.function.Function
 
 object DialogManager : CLog, TTSEngineListener {
 
@@ -108,32 +110,41 @@ object DialogManager : CLog, TTSEngineListener {
 
     fun startDialog() {
         engine.startRecognize()
-            .subscribe(object : Observer<SpeechEvent> {
-                override fun onSubscribe(d: Disposable) {
+            .filter { it.type == EventType.NLU_CLOUD }
+            .map<NLU>{
+                RuleRepository.getTargetRule(it.type as NLU)
+            }.map {
+                
+            }
+            .map(Function<SpeechEvent,>)
 
-                }
-
-                override fun onNext(t: SpeechEvent) {
-                    when (t.type) {
-                        EventType.ASR_WUW, EventType.VAD_START, EventType.VAD_END -> Unit
-                        EventType.ASR_PARTIAL -> {
-                            val text = (t.data as ASR).text
-
-                        }
-                        EventType.ASR_CLOUD -> {
-                            val text = (t.data as ASR).text
-
-                        }
-
-                        EventType.NLU_CLOUD -> {
-                            val nlu = t.data as NLU
-                            val words = nlu.parsedText.split(" ")
-                            words.forEach {
-                                if (responseMap.containsKey(it)) {
-
-                                }
-                            }
-                        }
+//            .
+//            .subscribe(object : Observer<SpeechEvent> {
+//                override fun onSubscribe(d: Disposable) {
+//
+//                }
+//
+//                override fun onNext(t: SpeechEvent) {
+//                    when (t.type) {
+//                        EventType.ASR_WUW, EventType.VAD_START, EventType.VAD_END -> Unit
+//                        EventType.ASR_PARTIAL -> {
+//                            val text = (t.data as ASR).text
+//
+//                        }
+//                        EventType.ASR_CLOUD -> {
+//                            val text = (t.data as ASR).text
+//
+//                        }
+//
+//                        EventType.NLU_CLOUD -> {
+//                            val nlu = t.data as NLU
+//                            val words = nlu.parsedText.split(" ")
+//                            words.forEach {
+//                                if (responseMap.containsKey(it)) {
+//
+//                                }
+//                            }
+//                        }
 //                        EventType.NLU_LOCAL -> {
 //                            val nlu = t.data as NLU
 //                        }
@@ -301,3 +312,5 @@ object DialogManager : CLog, TTSEngineListener {
 interface Callback {
     fun onText(text: String)
 }
+
+
