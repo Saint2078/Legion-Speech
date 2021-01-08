@@ -4,6 +4,7 @@ import android.os.Bundle
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
+import cn.darkfog.foundation.log.logE
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.speech.engine.R
 import cn.darkfog.speech.protocol.stt.*
@@ -18,6 +19,7 @@ import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
+import java.lang.Exception
 
 object BaiduEngine : AbstractSTTEngine(), CLog {
 
@@ -130,81 +132,100 @@ object BaiduListener : EventListener, CLog {
         offset: Int,
         length: Int
     ) {
-        if (name == "asr.audio") return
-
-        val response = BaiduResponse(
-            name,
-            params,
-            data?.let { String(it) },
-            offset,
-            length
-        )
-        logD {
-            response.toString()
-        }
-        eventEmitter?.run {
-            if (isDisposed) return
-            when (name) {
-                "asr.begin" -> onNext(SpeechEvent(EventType.VAD_START))
-                "asr.end" -> onNext(SpeechEvent(EventType.VAD_END))
-                "asr.partial" -> {
-                    val params =
-                        GsonHelper.gson.fromJson(response.params, BaiduPartialParams::class.java)
-                    when (params.result_type) {
-                        "partial_result" -> onNext(
-                            SpeechEvent(
-                                EventType.ASR_PARTIAL,
-                                ASR(params.best_result)
+            if (name == "asr.audio") return
+            val response = BaiduResponse(
+                name,
+                params,
+                data?.let { String(it) },
+                offset,
+                length
+            )
+            logD {
+                response.toString()
+            }
+            eventEmitter?.run {
+                if (isDisposed) return
+                when (name) {
+                    "asr.begin" -> onNext(SpeechEvent(EventType.VAD_START))
+                    "asr.end" -> onNext(SpeechEvent(EventType.VAD_END))
+                    "asr.partial" -> {
+                        val params =
+                            GsonHelper.gson.fromJson(
+                                response.params,
+                                BaiduPartialParams::class.java
                             )
-                        )
-                        "final_result" -> onNext(
-                            SpeechEvent(
-                                EventType.ASR_CLOUD,
-                                ASR(params.best_result)
+                        when (params.result_type) {
+                            "partial_result" -> onNext(
+                                SpeechEvent(
+                                    EventType.ASR_PARTIAL,
+                                    ASR(params.best_result)
+                                )
                             )
-                        )
-                        "nlu_result" -> {
-                            response.data?.let { data ->
-                                val nluData = JSONObject(data)
-                                val results = nluData.getJSONArray("results")
-                                val parsedText = nluData.getString("parsed_text")
-                                for (i in 0 until results.length()) {
-                                    val result = results.getJSONObject(i)
-                                    val slots = result.getJSONObject("slots")
-                                    val bundle = Bundle()
-                                    val keys = slots.keys()
-                                    keys.forEach {
-                                        bundle.putString(
-                                            it,
-                                            slots.getJSONArray(it)
-                                                .getJSONObject(0).getString("norm")
-                                        )
-                                    }
-
-                                    onNext(
-                                        SpeechEvent(
-                                            EventType.NLU_CLOUD,
-                                            NLU(
-                                                parsedText = parsedText,
-                                                domain = result.getString("domain"),
-                                                intent = result.getString("intent"),
-                                                score = result.getInt("score"),
-                                                slots = bundle
+                            "final_result" -> onNext(
+                                SpeechEvent(
+                                    EventType.ASR_CLOUD,
+                                    ASR(params.best_result)
+                                )
+                            )
+                            "nlu_result" -> {
+                                response.data?.let { data ->
+                                    val nluData = JSONObject(data)
+                                    val results = nluData.getJSONArray("results")
+                                    val parsedText = nluData.getString("parsed_text")
+                                    if (results.length() <= 0) {
+                                        onNext(
+                                            SpeechEvent(
+                                                EventType.NLU_CLOUD,
+                                                NLU(
+                                                    parsedText = parsedText,
+                                                    domain = "",
+                                                    intent = "",
+                                                    score = 0,
+                                                    slots = Bundle()
+                                                )
                                             )
                                         )
-                                    )
+                                    } else {
+                                        for (i in 0 until results.length()) {
+                                            val result = results.getJSONObject(i)
+                                            val slots = result.getJSONObject("slots")
+                                            val bundle = Bundle()
+                                            val keys = slots.keys()
+                                            keys.forEach {
+                                                bundle.putString(
+                                                    it,
+                                                    slots.getJSONArray(it)
+                                                        .getJSONObject(0).getString("norm")
+                                                )
+                                            }
+
+                                            onNext(
+                                                SpeechEvent(
+                                                    EventType.NLU_CLOUD,
+                                                    NLU(
+                                                        parsedText = parsedText,
+                                                        domain = result.getString("domain"),
+                                                        intent = result.getString("intent"),
+                                                        score = result.getInt("score"),
+                                                        slots = bundle
+                                                    )
+                                                )
+                                            )
+                                        }
+                                    }
                                 }
                             }
+                            else -> Unit
                         }
-                        else -> Unit
                     }
+                    "asr.exit" -> onComplete()
+                    else -> Unit
                 }
-                "asr.exit" -> onComplete()
-                else -> Unit
             }
 
-        }
+
     }
+
 }
 
 

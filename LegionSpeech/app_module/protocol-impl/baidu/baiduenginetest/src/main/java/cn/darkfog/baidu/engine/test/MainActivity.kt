@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity(), CLog {
                 override fun onComplete() {
                     promt.text = "${promt.text}初始化成功\n"
                     asr.text = "初始化成功\n"
-                    DialogManager.startWakeUp()
+                    DialogManager.startDialog()
                 }
 
                 override fun onError(e: Throwable) {

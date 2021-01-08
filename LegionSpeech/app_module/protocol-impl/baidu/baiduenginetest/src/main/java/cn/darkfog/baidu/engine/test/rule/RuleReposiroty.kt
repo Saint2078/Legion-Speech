@@ -1,22 +1,26 @@
 package cn.darkfog.dialog_manager.rule
 
 import android.os.Bundle
+import cn.darkfog.foundation.log.CLog
+import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.StorageUtil
 import cn.darkfog.speech.protocol.stt.NLU
 import io.reactivex.Completable
 import java.io.Serializable
 
-object RuleRepository {
+object RuleRepository:CLog {
     private val ruleMap = HashMap<String, NLU>()
 
     fun init(params: Bundle? = null): Completable {
-        return StorageUtil.getCache(Array<Rule>::class.java, "rules.dat")
-            .doOnSuccess { arrayOfRules ->
-                arrayOfRules.forEach {
-                    ruleMap[it.origin] = it.target
-                }
-            }
-            .ignoreElement()
+        logD { "Rule引擎初始化成功" }
+        return Completable.complete()
+//        StorageUtil.getCache(Array<Rule>::class.java, "rules.dat")
+//            .doOnSuccess { arrayOfRules ->
+//                arrayOfRules.forEach {
+//                    ruleMap[it.origin] = it.target
+//                }
+//            }
+//            .ignoreElement()
     }
 
     fun addRule(rule: Rule): Completable {

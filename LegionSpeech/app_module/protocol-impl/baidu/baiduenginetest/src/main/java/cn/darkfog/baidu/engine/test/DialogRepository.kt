@@ -38,19 +38,22 @@ object TaskRepository {
     )
 
     fun init(extra: Bundle? = null): Completable {
-        return Completable.create {
+        return Completable.create { emitter ->
+            responseMap.keys.forEach{
+                map[it] = Response(text = responseMap[it]!!)
+            }
+            emitter.onComplete()
         }
     }
 
     fun handlerNLU(nlu: NLU): Response {
-        with(nlu.parsedText.replace(" ", "")) {
-            map.keys.forEach {
-                if (contains(it)) {
-                    map[it]
-                }
+        val text = nlu.parsedText.replace(" ", "")
+        map.keys.forEach {
+            if (text.contains(it)) {
+               return map[it]!!
             }
-            return Response(text = "暂不支持")
         }
+        return Response(text = "暂不支持")
     }
 
 

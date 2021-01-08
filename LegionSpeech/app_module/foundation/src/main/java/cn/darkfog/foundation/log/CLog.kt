@@ -4,7 +4,7 @@ import com.orhanobut.logger.Logger
 
 interface CLog {
     val logTag: String
-        get() = javaClass.simpleName
+        get() = "DarkFogLog"
 }
 
 inline fun CLog.logD(block: () -> String?) {
