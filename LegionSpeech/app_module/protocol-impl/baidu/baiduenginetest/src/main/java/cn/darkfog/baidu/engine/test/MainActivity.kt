@@ -10,13 +10,14 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.log.CLog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), CLog, Callback {
+class MainActivity : AppCompatActivity(), CLog {
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,8 +57,7 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
                 override fun onComplete() {
                     promt.text = "${promt.text}初始化成功\n"
                     asr.text = "初始化成功\n"
-                    DialogManager.callback = this@MainActivity
-                    DialogManager.startDialog()
+                    DialogManager.startWakeUp()
                 }
 
                 override fun onError(e: Throwable) {
@@ -105,17 +105,16 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
         )
     }
 
-    override fun onText(text: String, tag: Int) {
-        when (tag) {
-            0 -> {
-                asr.text = "识别结果：$text\n"
-            }
-            1 -> {
-                promt.text = "$text\n"
-            }
-        }
-
-    }
+//    override fun onText(text: String, tag: Int) {
+//        when (tag) {
+//            0 -> {
+//                asr.text = "识别结果：$text\n"
+//            }
+//            1 -> {
+//                promt.text = "$text\n"
+//            }
+//        }
+//    }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)

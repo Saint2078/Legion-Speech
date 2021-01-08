@@ -12,7 +12,7 @@ import kotlin.collections.HashMap
 object TTSRepository {
     val ttsEngine = TTSEngine(AppContextLinker.context, TTSMode.ONLINE)
 
-    fun init(extra: Bundle?): Completable {
+    fun init(extra: Bundle? = null): Completable {
         return Completable.create {
             JDLogProxy.setEnable(true, JDLogProxy.VERBOSE)
             val ttsParam = TTSParam()

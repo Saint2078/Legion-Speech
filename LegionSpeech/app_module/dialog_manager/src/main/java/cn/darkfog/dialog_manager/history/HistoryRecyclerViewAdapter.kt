@@ -24,7 +24,7 @@ class HistoryRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = values[position]
 
-        holder.asr.text = record.asr?.content
+        holder.asr.text = ""//record.asr?.content
         holder.nlu.text = "Domian:${record.nlu?.domain}; Intent:${record.nlu?.intent}"
 
         holder.play.setOnClickListener {
