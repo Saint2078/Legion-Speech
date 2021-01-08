@@ -12,6 +12,7 @@ object TaskRepository {
     }
 
     fun handlerNLU(nlu: NLU):Response{
+        with(nlu.)
         return Response(text = "暂不支持")
     }
 

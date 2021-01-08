@@ -8,13 +8,11 @@ import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.log.logE
 import cn.darkfog.speech.protocol.stt.*
-import com.jdai.tts.*
+import com.jdai.tts.TTSEngine
+import com.jdai.tts.TTSMode
 import io.reactivex.Completable
-import io.reactivex.CompletableEmitter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import java.util.*
-import kotlin.collections.HashMap
 
 object DialogManager : CLog {
 
@@ -56,32 +54,7 @@ object DialogManager : CLog {
     )
 
     fun init(): Completable {
-        return Completable.create {
-            JDLogProxy.setEnable(true, JDLogProxy.VERBOSE)
-            val ttsParam = TTSParam()
-            ttsParam.setOpts("aue", "2"); // 0：wav, 1：pcm, 2：opus,  3：mp3
-            ttsParam.setOpts("sr", "16000"); //  采样率 wav和pcm支持4k到24k的采样率 opus支持8k 12k 16k 和24k的采样率
-            ttsParam.setOpts(
-                "serverURL",
-                "https://aiapi.jd.com/jdai/tts_vip"
-            )// 接口地址（注意每个API接口地址不同，详见购买的API接口文档）
-            ttsParam.setOpts("appKey", "b399d02131515930e3d173425ae32720");
-            ttsParam.setOpts("appSecret", "edfad37deee18ab30a1a69105be0af56");
-            ttsParam.setOpts("CustomerType", "0"); // 固定值，Neuhub平台
-            ttsParam.setOpts("tte", "1"); // 1:UTF-8 (目前仅支持UTF-8格式)
-            ttsParam.setOpts("tim", "1"); // 0：女声 1：男声
-            ttsParam.setOpts("vol", "4"); // 音量[0.1, 10.0]
-            ttsParam.setOpts("sp", "1.0"); // 语速 [0.5, 2.0] wav和pcm支持4k到24k的采样率
-            ttsParam.setOpts("streamMode", "1"); // 1 流式模式， 0 非流式模式
-            ttsParam.setOpts("tt", "0"); // 文本格式,  0：文本 1：SSML
-            ttsParam.setOpts("ttsModel", "taotao.dat");  //引擎模型， 在离线模式下有效
-            ttsParam.setOpts("connectTimeout", "3000");  //3s
-            ttsParam.setOpts("readTimeout", "5000");  //5s
-            ttsParam.setOpts("playCacheNum", "0");  //播放器缓冲设置， 内部默认为2
-            ttsParam.setOpts("httpProtocols", "http1");  //http1版本协议
-            ttsEngine.setParam(ttsParam)
-            ttsEngine.setTTSEngineListener(this)
-        }.andThen(engine.init())
+        return Completable.complete()
     }
 
     fun startWakeUp() {
@@ -119,165 +92,20 @@ object DialogManager : CLog {
                 TaskRepository.handlerNLU(it)
             }.singleOrError()
             .flatMapCompletable {
-                Completable.complete()
+                TTSRepository.speak(it.text)
             }
             .doOnComplete { }
             .doOnError { }
             .subscribe()
     }
-
-    fun speak(text: String) {
-        val uuid = UUID.randomUUID().toString()
-        ttsEngine.speak(text, uuid)
-    }
-
-
-
-//    fun startDialog(){
-//        BaiduE
-//        MyProxy.sttEngine
-//            .startRecognize()
-//            .doOnNext {
-//                when(it.type){
-//
-//                }
-//                /*ASR结果*/
-//
-//                /*NLU结果*/
-//
-//                /*Error结果*/
-//
-//            }
-//    }
-
-//    private var record = SpeechRecord()
-//    val state = MutableLiveData<SpeechState>(SpeechState.ERROR)
-//    val callback = object : SpeechCallback {
-//        override fun onPartialAsrResult(result: ASR) {
-//            logD {
-//                result.toString()
-//            }
-//        }
-//
-//        override fun onFinalAsrResult(result: ASR) {
-//            record.asr = result
-//            logD {
-//                result.toString()
-//            }
-//        }
-//
-//        override fun onFinalNluResult(result: NLU) {
-//            record.nlu = result
-//            logD {
-//                result.toString()
-//            }
-//        }
-//
-//        override fun onError(e: Exception) {
-//            logD {
-//                e.toString()
-//            }
-//        }
-//    }
-//
-//    fun init(): Completable {
-//        return BaiduEngine.init(callback)
-//            .doOnComplete {
-//                bindState()
-//            }
-//    }
-//
-//    fun start() {
-//        record = SpeechRecord()
-//        val time = System.currentTimeMillis()
-//        record.timestamp = time
-//        val file = "${StorageUtil.AUDIO_PATH}/$time.pcm"
-//        record.pcmFile = file
-//        BaiduEngine.start()
-//    }
-//
-//    fun stop() {
-//        BaiduEngine.stop()
-//    }
-//
-//    fun cancel() {
-//        BaiduEngine.cancel()
-//    }
-//
-//    fun bindState() {
-//        BaiduEngine.state.observeForever {
-//            when (it) {
-//                SpeechState.IDLE -> state.postValue(SpeechState.IDLE)
-//                SpeechState.LISTENING -> state.postValue(SpeechState.LISTENING)
-//                SpeechState.PROCESS -> state.postValue(SpeechState.PROCESS)
-//                SpeechState.FINISH -> RecordRepository.addSpeechRecord(record)
-//            }
-//        }
-//    }
 }
 
-object Listener : TTSEngineListener {
 
-    var emitters: HashMap<String?, CompletableEmitter?> = HashMap()
-
-    override fun onSynthesizeStart(p0: String?) {
-        Unit
-    }
-
-    override fun onSynthesizeFirstPackage(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSynthesizeDataArrived(
-        p0: String?,
-        p1: ByteArray?,
-        p2: Int,
-        p3: Double,
-        p4: String?
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onSynthesizeFinish(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayStart(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayProgressChanged(p0: String?, p1: Double) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayPause(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayResume(p0: String?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onPlayFinish(p0: String?) {
-        DialogManager.startWakeUp()
-    }
-
-    override fun onError(p0: String?, p1: TTSErrorCode?) {
-        logE { "播放${p0}出错 : $p1" }
-    }
-
-    override fun onBufValid(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun onTry(p0: String?, p1: TTSErrorCode?) {
-        TODO("Not yet implemented")
-    }
-
-}
 
 interface Callback {
     fun onText(text: String)
 }
+
+
 
 
