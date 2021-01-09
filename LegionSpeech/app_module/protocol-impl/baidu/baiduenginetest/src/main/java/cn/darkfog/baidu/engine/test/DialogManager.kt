@@ -39,11 +39,10 @@ object DialogManager : CLog {
                     if (result.isNotEmpty()) {
                         result[0].content.audioUrl?.run {
                             MediaManager.postAudio(listOf(this)) {
-                                startWakeUp()
+                                startDialog()
                             }
                         }
                     }
-
                 }
 
                 override fun onError(throwable: Throwable, rawResult: NLUResult?) {
@@ -59,7 +58,8 @@ object DialogManager : CLog {
             })
             logD { "微软引擎初始化成功" }
             it.onComplete()
-        }.andThen(TTSRepository.init()).andThen(RuleRepository.init()).andThen(engine.init()).andThen(TaskRepository.init())
+        }.andThen(TTSRepository.init()).andThen(RuleRepository.init()).andThen(engine.init())
+            .andThen(TaskRepository.init())
     }
 
     fun startWakeUp() {
@@ -133,7 +133,27 @@ object DialogManager : CLog {
 
                 }
                 .subscribe()
-            Provider.MS -> msftEngine.start()
+            Provider.MS -> engine.startRecognize()
+                .filter {
+                    logD { "receive $it" }
+                    it.type == EventType.NLU_CLOUD
+                }
+                .map<NLU> {
+                    val result = RuleRepository.getTargetRule(it.data as NLU)
+                    logD { "$result" }
+                    result
+                }.singleOrError()
+                .doOnSuccess { msftEngine.nluProcess(it.parsedText.replace(" ", "")) }
+                .doOnError {
+                    logE(it) { "出错了" }
+                    TTSRepository.speak("小冰出错了")
+                        .doOnComplete {
+                            startDialog()
+                        }.doOnError {
+                            logE(it) { "唤醒出错" }
+                        }
+                        .subscribe()
+                }.subscribe()
         }
     }
 

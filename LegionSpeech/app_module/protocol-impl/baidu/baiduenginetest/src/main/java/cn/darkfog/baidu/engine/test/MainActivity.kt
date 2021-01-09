@@ -10,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.darkfog.dialog_manager.Callback
 import cn.darkfog.dialog_manager.DialogManager
 import cn.darkfog.foundation.log.CLog
 import io.reactivex.CompletableObserver
@@ -17,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), CLog {
+class MainActivity : AppCompatActivity(), CLog,Callback {
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,17 +106,6 @@ class MainActivity : AppCompatActivity(), CLog {
         )
     }
 
-//    override fun onText(text: String, tag: Int) {
-//        when (tag) {
-//            0 -> {
-//                asr.text = "识别结果：$text\n"
-//            }
-//            1 -> {
-//                promt.text = "$text\n"
-//            }
-//        }
-//    }
-
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
@@ -142,6 +132,12 @@ class MainActivity : AppCompatActivity(), CLog {
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
+
+    override fun onText(text: String) {
+        AndroidSchedulers.mainThread().scheduleDirect {
+            promt.text = "$text\n"
+        }
     }
 
 
