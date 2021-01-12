@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import cn.darkfog.dialog_manager.DialogManager
+import cn.darkfog.dialog_manager.DialogManager1
 import cn.darkfog.foundation.arch.AppContextLinker
 import cn.darkfog.legionspeech.R
 import com.blankj.utilcode.util.AdaptScreenUtils
@@ -46,7 +46,7 @@ object SpeechView {
         icon = view.findViewById(R.id.content)
         view.setOnClickListener {
             when (state.value) {
-                ViewState.IDLE -> DialogManager.start()
+                ViewState.IDLE -> DialogManager1.start()
                 ViewState.ERROR -> Toast.makeText(
                     AppContextLinker.context,
                     "出错了",

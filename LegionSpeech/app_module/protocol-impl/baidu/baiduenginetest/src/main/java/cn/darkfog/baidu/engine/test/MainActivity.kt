@@ -10,13 +10,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.foundation.log.CLog
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), CLog, Callback {
+class MainActivity : AppCompatActivity(), Callback {
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {

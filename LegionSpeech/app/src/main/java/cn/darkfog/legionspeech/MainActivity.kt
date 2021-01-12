@@ -5,20 +5,25 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.dialog_manager.Callback
-import cn.darkfog.dialog_manager.DialogManager
-import cn.darkfog.foundation.log.CLog
+import cn.darkfog.dialog_manager.DialogManager1
 import io.reactivex.CompletableObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), CLog, Callback {
+class MainActivity : AppCompatActivity() {
     var count = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         count = 0
@@ -30,17 +35,14 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
             if (count < 1) {
                 count += 1
                 requestWindow()
-            } else {
-                content.text = "${content.text}没有悬浮窗权限，请重新启动或提供权限\n"
             }
         } else {
             requestPermissionIfNeeded()
         }
     }
 
-
     private fun speechInit() {
-        DialogManager.init()
+        DialogManager1.init()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {
@@ -48,12 +50,11 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
                 }
 
                 override fun onComplete() {
-                    content.text = "${content.text}初始化成功\n"
-                    DialogManager.callback = this@MainActivity
+                    DialogManager1.startDialog()
                 }
 
                 override fun onError(e: Throwable) {
-                    content.text = "${content.text}引擎初始化失败\n"
+
                 }
             })
     }
@@ -80,9 +81,8 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
     }
 
     private fun requestPermissionsSuc() {
-        content.text = "${content.text}权限申请成功\n"
+
         speechInit()
-        startService(Intent(this, DialogService::class.java))
     }
 
     private fun requestPermissionsFail() {
@@ -98,8 +98,26 @@ class MainActivity : AppCompatActivity(), CLog, Callback {
         )
     }
 
-    override fun onText(text: String) {
-        content.text = "${content.text}$text\n"
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) hideSystemUI()
     }
+
+    private fun hideSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                // Hide the nav bar and status bar
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN)
+    }
+
+    private fun showSystemUI() {
+        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+    }
+
 
 }

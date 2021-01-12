@@ -24,7 +24,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(path: ':app_module:foundation')
-    implementation project(path: ':app_module:resource')
     implementation project(path: ':app_module:dialog_manager')
 }
