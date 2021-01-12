@@ -10,7 +10,13 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import cn.darkfog.manager.DialogManager
+import cn.darkfog.speech.protocol.stt.Response
 import cn.darkfog.temp.legionspeech.R
+import io.reactivex.CompletableObserver
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 class MainActivity : AppCompatActivity() {
     var count = 0
@@ -39,21 +45,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun speechInit() {
-//        DialogManager.init()
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object : CompletableObserver {
-//                override fun onSubscribe(d: Disposable) {
-//
-//                }
-//
-//                override fun onComplete() {
-//                    DialogManager.startDialog()
-//                }
-//
-//                override fun onError(e: Throwable) {
-//
-//                }
-//            })
+        DialogManager.init()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {
+
+                }
+
+                override fun onComplete() {
+                    DialogManager.start().subscribe(object : Observer<Response> {
+                        override fun onSubscribe(d: Disposable) {
+
+                        }
+
+                        override fun onNext(t: Response) {
+
+                        }
+
+                        override fun onError(e: Throwable) {
+
+                        }
+
+                        override fun onComplete() {
+
+                        }
+
+                    })
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+            })
     }
 
     private fun requestPermissionIfNeeded() {

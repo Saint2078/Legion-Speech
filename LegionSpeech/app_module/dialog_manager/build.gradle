@@ -25,5 +25,5 @@ android {
 
 dependencies {
     api project(path: ':app_module:foundation')
-    implementation project(path: ':app_module:protocol-impl:baidu:engine')
+    api project(path: ':app_module:protocol-impl:baidu:engine')
 }
