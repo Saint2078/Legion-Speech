@@ -1,8 +1,8 @@
 package cn.darkfog.temp.dialog_manager.model.bean
 
-data class SpeechRecord(
-    var timestamp: Long = 0,
-    var pcmFile: String? = null,
-    var asr: ASR? = null,
-    var nlu: NLU? = null
-)
+//data class SpeechRecord(
+//    var timestamp: Long = 0,
+//    var pcmFile: String? = null,
+//    var asr: ASR? = null,
+//    var nlu: NLU? = null
+//)

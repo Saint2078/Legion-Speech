@@ -1,4 +1,4 @@
-package cn.darkfog.temp.legionspeech
+package cn.darkfog
 
 import cn.darkfog.foundation.arch.BaseApplication
 

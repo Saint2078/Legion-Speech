@@ -1,8 +1,7 @@
-package cn.darkfog
+package cn.darkfog.speech.engine.baidu
 
 import android.os.Bundle
 import cn.darkfog.foundation.arch.AppContextLinker
-import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.util.GsonHelper
 import cn.darkfog.speech.engine.R
@@ -19,7 +18,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
 
-object BaiduEngine : AbstractSTTEngine(), CLog {
+object BaiduEngine : AbstractSTTEngine() {
 
     private lateinit var wakeUpManager: EventManager
     private lateinit var recogManager: EventManager
@@ -106,7 +105,7 @@ object BaiduEngine : AbstractSTTEngine(), CLog {
 }
 
 
-object BaiduListener : EventListener, CLog {
+object BaiduListener : EventListener {
     data class BaiduPartialParams(
         val best_result: String,
         val result_type: String

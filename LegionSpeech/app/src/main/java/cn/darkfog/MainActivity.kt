@@ -1,4 +1,4 @@
-package cn.darkfog.temp.legionspeech
+package cn.darkfog
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,10 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.temp.dialog_manager.DialogManager1
-import io.reactivex.CompletableObserver
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import cn.darkfog.temp.legionspeech.R
 
 class MainActivity : AppCompatActivity() {
     var count = 0
@@ -42,21 +39,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun speechInit() {
-        DialogManager1.init()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {
-
-                }
-
-                override fun onComplete() {
-                    DialogManager1.startDialog()
-                }
-
-                override fun onError(e: Throwable) {
-
-                }
-            })
+//        DialogManager.init()
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object : CompletableObserver {
+//                override fun onSubscribe(d: Disposable) {
+//
+//                }
+//
+//                override fun onComplete() {
+//                    DialogManager.startDialog()
+//                }
+//
+//                override fun onError(e: Throwable) {
+//
+//                }
+//            })
     }
 
     private fun requestPermissionIfNeeded() {

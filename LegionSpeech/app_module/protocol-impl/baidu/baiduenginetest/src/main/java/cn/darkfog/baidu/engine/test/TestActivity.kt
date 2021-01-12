@@ -4,7 +4,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import cn.darkfog.BaiduEngine
+import cn.darkfog.speech.engine.baidu.BaiduEngine
 import cn.darkfog.speech.protocol.stt.SpeechEvent
 import io.reactivex.CompletableObserver
 import io.reactivex.Observer

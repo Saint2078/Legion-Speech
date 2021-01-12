@@ -3,11 +3,10 @@ package cn.darkfog.baidu.engine.test
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import cn.darkfog.BaiduEngine
 import cn.darkfog.foundation.arch.AppContextLinker
-import cn.darkfog.foundation.log.CLog
 import cn.darkfog.foundation.log.logD
 import cn.darkfog.foundation.log.logE
+import cn.darkfog.speech.engine.baidu.BaiduEngine
 import cn.darkfog.speech.protocol.stt.ASR
 import cn.darkfog.speech.protocol.stt.AbstractSTTEngine
 import cn.darkfog.speech.protocol.stt.EventType
@@ -17,7 +16,7 @@ import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import java.util.*
 
-object DialogManager : CLog {
+object DialogManager {
     private val ttsEngine = TextToSpeech(AppContextLinker.context, { status ->
     }, "com.bmwgroup.apinext.china_speech_assistant")
 
